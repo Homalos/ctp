@@ -91,7 +91,13 @@
    python build.py
    ```
 
-## 4. 脚本功能详细说明
+## 4. Demo测试
+
+在项目根目录下 `demo.py`中填入 CTP 环境信息后运行
+
+![run_result_2025_09_03_112244](D:\Project\PycharmProjects\ctp\assets\run_result_2025_09_03_112244.png)
+
+## 5. 脚本功能详细说明
 
 generator脚本位于`ctp/api/generator/`
 
@@ -169,7 +175,7 @@ generator脚本位于`ctp/api/generator/`
 8. **`build.py`**(依赖`ctp/api/src/`下的`ctpmd`和`ctptd`模块) → 一键编译出`ctpmd.cp313-win_amd64.pyd`、`ctptd.cp313-win_amd64.pyd`、`ctpmd.pyi`、`ctptd.pyi`
 
 
-## 5. 脚本用途
+## 6. 脚本用途
 
 这些脚本最终生成的代码用于：
 - 将CTP的C++ API封装成Python可调用的接口
@@ -178,7 +184,7 @@ generator脚本位于`ctp/api/generator/`
 - 生成请求函数的Python绑定
 
 
-## 6. 优势
+## 7. 优势
 
 - 使用pybind将C++与Python CTP API绑定，性能优于Swig转换方式。
 - 自动同步: 当CTP官方更新头文件时，替换最新h、dll、so、lib文件，执行生成脚本后，脚本会自动反映最新的虚函数
@@ -188,10 +194,10 @@ generator脚本位于`ctp/api/generator/`
 
 总结：这是一个完整的代码生成工具链，用于自动化生成CTP API的Python绑定代码，避免手工编写大量重复的绑定代码，具有更好的可维护性和健壮性！
 
-## 7. 社区支持
+## 8. 社区支持
 
 - **技术交流 (QQ Group)**: `446042777`
 
-## 8. 免责声明
+## 9. 免责声明
 
 **[免责声明内容](doc/免责声明.md)**
