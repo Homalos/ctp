@@ -15,7 +15,7 @@ This project is compiled using the following environment. If you use other tool 
 
 - **Windows 11 + MSVC 2022**
 
-- **Python 3.13.6** virtual environment, installed by uv.
+- **Python 3.13.6** virtual environment, installed by UV.
 
 - **CTP v6.7.11**: [CTP official download link](https://www.simnow.com.cn/static/apiDownload.action)
 
@@ -23,7 +23,7 @@ This project is compiled using the following environment. If you use other tool 
 
 - **Pybind11**: Python C++ bindings
 
-- **uv**: A modern Python package manager with faster installation and smarter dependency resolution.
+- **UV**: A modern Python package manager with faster installation and smarter dependency resolution.
 
 ## 2. Project Structure
 

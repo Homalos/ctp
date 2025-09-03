@@ -14,11 +14,11 @@
 本项目使用以下环境编译，若自行使用其他工具版本，请做相应调整。
 
 - **Windows 11 + MSVC 2022**
-- **Python 3.13.6** 虚拟环境，由 uv 安装。
+- **Python 3.13.6** 虚拟环境，由 UV 安装。
 - **CTP v6.7.11**：[CTP官方下载地址](https://www.simnow.com.cn/static/apiDownload.action)
 - **Meson + Ninja**: 现代化的C++扩展构建系统。
 - **Pybind11**: Python - C++绑定。
-- **uv**: 现代化Python包管理器，提供更快的安装速度和更智能的依赖解析。
+- **UV**: 现代化Python包管理器，提供更快的安装速度和更智能的依赖解析。
 
 ## 2. 项目结构
 
