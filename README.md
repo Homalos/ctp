@@ -7,6 +7,8 @@
 
 This project automatically generates Python APIs based on the CTP C++ API, making it easier for CTP Python developers to maintain the latest CTP interfaces and quickly upgrade CTP versions.
 
+Note: This project has only been tested under CTP v6.7.11. Other versions have not been tested. The project CTP version number is configured in the `ctp/__init__.py` file.
+
 ## 1. Compilation Environment
 
 This project is compiled using the following environment. If you use other tool versions, please make appropriate adjustments.

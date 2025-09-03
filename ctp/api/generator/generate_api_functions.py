@@ -18,6 +18,7 @@
 import importlib
 import re
 
+from ctp import ctp_version
 from ctp.api.generator.ctp_function_const import CtpFunctionConst  # noqa
 from ctp.api.generator.generate_helper import replace_function_name, process_func_type, format_pointer_arg, \
     format_equal_arg
@@ -344,29 +345,52 @@ class GenerateApiFunc:
 
                         for arg_name, arg_type in func_info['func_args'].items():
                             # 特殊变量名的处理
-                            if arg_type.endswith("Field"):
-                                self.source_functions[func_name]['func_field'] = arg_type
-                                converted_arg_types.append("const dict &req")
-                            elif arg_name == "nRequestID" and arg_type == "int":
-                                converted_arg_types.append("int reqid")
-                            elif arg_name == "pszFlowPath=\"\"" and arg_type == "const char":
-                                converted_arg_types.append("string pszFlowPath=\"\"")
-                            elif arg_name == "bIsUsingUdp=false" and arg_type == "const bool":
-                                converted_arg_types.append("bool bIsUsingUdp=false")
-                            elif arg_name == "bIsMulticast=false" and arg_type == "const bool":
-                                converted_arg_types.append("bool bIsMulticast=false")
-                            elif arg_name == "bIsProductionMode=true" and arg_type == "bool":
-                                converted_arg_types.append("bool bIsProductionMode=true")
-                            elif arg_name == "pszFrontAddress" and arg_type == "char":
-                                converted_arg_types.append("string pszFrontAddress")
-                            elif arg_name == "pszNsAddress" and arg_type == "char":
-                                converted_arg_types.append("string pszNsAddress")
-                            elif arg_name == "ppInstrumentID[]" and arg_type == "char":
-                                converted_arg_types.append("string instrumentID")
-                            elif arg_name == "nResumeType" and arg_type == "THOST_TE_RESUME_TYPE":
-                                # source_functions func_args 中保留旧的参数类型 {'nType': 'THOST_TE_RESUME_TYPE'}
-                                self.source_functions[func_name]['func_args']['nType'] = arg_type
-                                converted_arg_types.append("int nType")
+                            if ctp_version == "6.7.11":
+                                if arg_type.endswith("Field"):
+                                    self.source_functions[func_name]['func_field'] = arg_type
+                                    converted_arg_types.append("const dict &req")
+                                elif arg_name == "nRequestID" and arg_type == "int":
+                                    converted_arg_types.append("int reqid")
+                                elif arg_name == "pszFlowPath=\"\"" and arg_type == "const char":
+                                    converted_arg_types.append("string pszFlowPath=\"\"")
+                                elif arg_name == "bIsUsingUdp=false" and arg_type == "const bool":
+                                    converted_arg_types.append("bool bIsUsingUdp=false")
+                                elif arg_name == "bIsMulticast=false" and arg_type == "const bool":
+                                    converted_arg_types.append("bool bIsMulticast=false")
+                                elif arg_name == "bIsProductionMode=true" and arg_type == "bool":
+                                    converted_arg_types.append("bool bIsProductionMode=true")
+                                elif arg_name == "pszFrontAddress" and arg_type == "char":
+                                    converted_arg_types.append("string pszFrontAddress")
+                                elif arg_name == "pszNsAddress" and arg_type == "char":
+                                    converted_arg_types.append("string pszNsAddress")
+                                elif arg_name == "ppInstrumentID[]" and arg_type == "char":
+                                    converted_arg_types.append("string instrumentID")
+                                elif arg_name == "nResumeType" and arg_type == "THOST_TE_RESUME_TYPE":
+                                    # source_functions func_args 中保留旧的参数类型 {'nType': 'THOST_TE_RESUME_TYPE'}
+                                    self.source_functions[func_name]['func_args']['nType'] = arg_type
+                                    converted_arg_types.append("int nType")
+                            else:
+                                if arg_type.endswith("Field"):
+                                    self.source_functions[func_name]['func_field'] = arg_type
+                                    converted_arg_types.append("const dict &req")
+                                elif arg_name == "nRequestID" and arg_type == "int":
+                                    converted_arg_types.append("int reqid")
+                                elif arg_name == "pszFlowPath=\"\"" and arg_type == "const char":
+                                    converted_arg_types.append("string pszFlowPath=\"\"")
+                                elif arg_name == "bIsUsingUdp=false" and arg_type == "const bool":
+                                    converted_arg_types.append("bool bIsUsingUdp=false")
+                                elif arg_name == "bIsMulticast=false" and arg_type == "const bool":
+                                    converted_arg_types.append("bool bIsMulticast=false")
+                                elif arg_name == "pszFrontAddress" and arg_type == "char":
+                                    converted_arg_types.append("string pszFrontAddress")
+                                elif arg_name == "pszNsAddress" and arg_type == "char":
+                                    converted_arg_types.append("string pszNsAddress")
+                                elif arg_name == "ppInstrumentID[]" and arg_type == "char":
+                                    converted_arg_types.append("string instrumentID")
+                                elif arg_name == "nResumeType" and arg_type == "THOST_TE_RESUME_TYPE":
+                                    # source_functions func_args 中保留旧的参数类型 {'nType': 'THOST_TE_RESUME_TYPE'}
+                                    self.source_functions[func_name]['func_args']['nType'] = arg_type
+                                    converted_arg_types.append("int nType")
 
                         # 处理转换后的参数并更新 source_functions
                         for arg in converted_arg_types:
@@ -563,32 +587,59 @@ class GenerateApiFunc:
                         if ',' in args_str:
                             args = args_str.split(',')
 
-                            if len(args) == 4:  # 如果有4个参数(CreateFtdcMdApi)
-                                if "string" in args_str and "bool" in args_str and ' ' in args_str:
-                                    # 第一个参数 pszFlowPath
-                                    arg_name1 = args[0].strip().split(' ')[1]
-                                    # 第二个参数 bIsUsingUdp
-                                    arg_name2 = args[1].strip().split(' ')[1]
-                                    # 第三个参数 bIsMulticast
-                                    arg_name3 = args[2].strip().split(' ')[1]
-                                    # 第四个参数 bIsProductionMode
-                                    arg_name4 = args[3].strip().split(' ')[1]
+                            if ctp_version == "6.7.11":
+                                if len(args) == 4:  # 如果有4个参数(CreateFtdcMdApi)
+                                    if "string" in args_str and "bool" in args_str and ' ' in args_str:
+                                        # 第一个参数 pszFlowPath
+                                        arg_name1 = args[0].strip().split(' ')[1]
+                                        # 第二个参数 bIsUsingUdp
+                                        arg_name2 = args[1].strip().split(' ')[1]
+                                        # 第三个参数 bIsMulticast
+                                        arg_name3 = args[2].strip().split(' ')[1]
+                                        # 第四个参数 bIsProductionMode
+                                        arg_name4 = args[3].strip().split(' ')[1]
 
-                                f.write(f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str(), "
-                                        f"{arg_name2}, {arg_name3}, {arg_name4});\n")
-                                f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
-                                f.write("};\n\n")
+                                    f.write(f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str(), "
+                                            f"{arg_name2}, {arg_name3}, {arg_name4});\n")
+                                    f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
+                                    f.write("};\n\n")
+                            else:
+                                if len(args) == 3:  # 如果有3个参数(CreateFtdcMdApi)
+                                    if "string" in args_str and "bool" in args_str and ' ' in args_str:
+                                        # 第1个参数 pszFlowPath
+                                        arg_name1 = args[0].strip().split(' ')[1]
+                                        # 第2个参数 bIsUsingUdp
+                                        arg_name2 = args[1].strip().split(' ')[1]
+                                        # 第三个参数 bIsMulticast
+                                        arg_name3 = args[2].strip().split(' ')[1]
+
+                                    f.write(f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str(), "
+                                            f"{arg_name2}, {arg_name3});\n")
+                                    f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
+                                    f.write("};\n\n")
+
                     elif func_name == CtpFunctionConst.CREATE_FTDC_TRADER_API:
                         if ',' in args_str:
                             args = args_str.split(',')
-                            if len(args) == 2:  # 如果有2个参数(CreateFtdcTraderApi)
-                                if "string" in args_str and "bool" in args_str and ' ' in args_str:
-                                    arg_name1 = args[0].strip().split(' ')[1]
-                                    arg_name2 = args[1].strip().split(' ')[1]
 
-                                f.write(f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str(), {arg_name2});\n")
-                                f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
-                                f.write("};\n\n")
+                            if ctp_version == "6.7.11":
+                                if len(args) == 2:  # 如果有2个参数(CreateFtdcTraderApi)
+                                    if "string" in args_str and "bool" in args_str and ' ' in args_str:
+                                        arg_name1 = args[0].strip().split(' ')[1]
+                                        arg_name2 = args[1].strip().split(' ')[1]
+
+                                    f.write(f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str(), {arg_name2});\n")
+                                    f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
+                                    f.write("};\n\n")
+                            else:
+                                if len(args) == 1:  # 如果有1个参数(CreateFtdcTraderApi)
+                                    if "string" in args_str and ' ' in args_str:
+                                        arg_name1 = args[0].strip().split(' ')[1]
+
+                                    f.write(
+                                        f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str());\n")
+                                    f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
+                                    f.write("};\n\n")
 
                     elif func_name == CtpFunctionConst.RELEASE:
                         f.write(f"\tthis->api->{func_name}();\n")

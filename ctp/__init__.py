@@ -9,3 +9,4 @@
 @Software   : PyCharm
 @Description: description
 """
+ctp_version = "6.7.11"
