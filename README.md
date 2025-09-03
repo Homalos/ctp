@@ -46,7 +46,7 @@
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
-2. 安装 Python**(方式一进行这一步，方式二直接跳过)**，我自己用的是 3.13.6，你可以安装自己需要的版本
+2. 安装 Python(方式一进行这一步，方式二直接跳过)，我自己用的是 3.13.6，你可以安装自己需要的版本
 
    ```bash
    uv python install 3.13
