@@ -28,13 +28,13 @@
 
    On Windows
 
-   **全局安装(推荐方式)**
+   **方式一、全局安装(推荐方式，二选一)**
 
    ```bash
    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
 
-   **单独在某个 Python 环境中安装**
+   **方式二、单独在 Python 环境中安装(二选一)**
 
    ```bash
    pip install uv
@@ -46,7 +46,7 @@
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 
-2. 安装 Python**(全局安装进行这一步)**，我自己用的是 3.13.6，你可以安装自己需要的版本
+2. 安装 Python**(方式一进行这一步，方式二直接跳过)**，我自己用的是 3.13.6，你可以安装自己需要的版本
 
    ```bash
    uv python install 3.13
