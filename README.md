@@ -1,184 +1,205 @@
-# 项目说明
+<p align="center">
+  English |
+  <a href="README_CN.md">简体中文</a>
+</p>
+# Project Description
 
-用于根据CTP C++ API 自动化生成 Python API，便于 CTP Python 开发者维护最新的 CTP 接口，实现 CTP 版本的快速升级。
+This project automatically generates Python APIs based on the CTP C++ API, making it easier for CTP Python developers to maintain the latest CTP interfaces and quickly upgrade CTP versions.
 
-## 1. 编译环境
+## 1. Compilation Environment
 
-本项目使用以下环境编译，若自行使用其他工具版本，请做相应调整。
+This project is compiled using the following environment. If you use other tool versions, please make appropriate adjustments.
 
 - **Windows 11 + MSVC 2022**
 
-- **Python 3.13.6** 虚拟环境，由 uv 安装。
+- **Python 3.13.6** virtual environment, installed by uv.
 
-- **CTP v6.7.11**：官方下载地址 https://www.simnow.com.cn/static/apiDownload.action
+- **CTP v6.7.11**: Official download address: https://www.simnow.com.cn/static/apiDownload.action
 
-- **Meson + Ninja**: 现代化的C++扩展构建系统。
+- **Meson + Ninja**: A modern C++ extension build system.
 
-  Meson: 类似于Make、CMake，它的主要任务是配置编译环境、生成编译指令（比如给Ninja），并管理整个编译过程。它本身并不直接编译代码，而是驱动像Ninja这样的工具来完成。
+Meson: Similar to Make and CMake, its main task is to configure the compilation environment, generate compilation instructions (for example, for Ninja), and manage the entire compilation process. It does not directly compile code, but rather drives tools like Ninja to do so.
 
-- **Pybind11**: Python - C++绑定。
+- **Pybind11**: Python C++ bindings
 
-  Pybind11: 轻量级的 C++ 库，用于将 C++ 代码暴露（绑定）给 Python 解释器。它允许 Python 代码像调用普通 Python 模块一样，无缝地调用 C++ 编写的函数和类。其核心目标是提供一个极致简单、近乎零样板代码的接口，能轻松地将 C++ 的高性能计算能力与 Python 的易用性和庞大的生态系统结合起来。
+Pybind11: A lightweight C++ library for exposing (binding) C++ code to the Python interpreter. It allows Python code to seamlessly call C++ functions and classes, just like calling regular Python modules. Its core goal is to provide an extremely simple, nearly boilerplate-free interface that easily combines the high-performance computing capabilities of C++ with the ease of use and vast Python ecosystem.
 
-- **uv**: 现代化Python包管理器，提供更快的安装速度和更智能的依赖解析。
+- **uv**: A modern Python package manager with faster installation and smarter dependency resolution.
 
-## 2. 安装基础环境(已安装可跳过)
+## 2. Install the Basic Environment (skip if already installed)
 
-1. 安装uv
+1. Install uv
 
-   On Windows
+On Windows
 
-   **方式一：全局安装(推荐方式，二选一)**
+**Method 1: Global Installation (Recommended, choose one)**
 
-   ```bash
-   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-   ```
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
 
-   **方式二：单独在 Python 环境中安装(二选一)**
+**Method 2: Install in a Single Python Environment (Choose one)**
 
-   ```bash
-   pip install uv
-   ```
+```bash
+pip install uv
+```
 
-   On Linux
+On Linux
 
-   ```bash
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-   ```
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-2. 安装 Python(方式一进行这一步，方式二直接跳过)，我自己用的是 3.13.6，你可以安装自己需要的版本
+2. Install Python (Perform this step with Method 1, skip this with Method 2). I use 3.13.6; you can install your preferred version.
 
-   ```bash
-   uv python install 3.13
-   ```
+```bash
+uv python install 3.13
+```
 
-## 3. 使用
+## 3. Usage
 
-1. 安装 Python 虚拟环境及依赖(根目录下执行)
+1. Install a Python virtual environment and dependencies (execute from the root directory)
 
-   ```bash
-   # 使用uv在当前项目下创建指定版本的Python虚拟环境
-   uv venv --python 3.13 .venv
-   ```
-   ```bash
-   # 安装依赖库
-   uv add meson-python
-   uv add pybind11
-   uv add pybind11-stubgen
-   ```
+```bash
+# Use uv to create a Python virtual environment with a specified version in the current project.
 
-2. 在`generator`目录下执行生成一键生成脚本(生成 CTP C++ API 的 Python 绑定代码)
+uv venv --python 3.13 .venv
 
-   ```bash
-   # 激活Python虚拟环境进入generator
-   .venv\Scripts\activate
-   cd ctp\api\generator
-   ```
-   ```bash
-   # 一键生成绑定文件
-   python generate_onekey.py
-   ```
+```
 
-3. 根目录执行如下构建脚本，生成 CTP 的 C++ API 封装成 Python 可调用的接口
+```bash
+# Install dependent libraries
 
-   ```bash
-   # 一键编译出CTP Python API
-   python build.py
-   ```
+uv add meson-python
 
-## 4. 脚本功能详细说明
+uv add pybind11
 
-generator脚本位于`ctp/api/generator/`
+uv add pybind11-stubgen
+
+```
+
+2. Execute the one-click build script in the `generator` directory (to generate Python bindings for the CTP C++ API)
+
+```bash
+# Activate the Python virtual environment and enter the generator.
+
+.venv\Scripts\activate
+
+cd ctp\api\generator
+```
+
+```bash
+# Generate binding files with one click.
+
+python generate_onekey.py
+```
+
+3. Execute the following build script in the root directory to generate the CTP C++ API and encapsulate it into a Python-callable interface.
+
+```bash
+# Compile the CTP Python API with one click.
+
+python build.py
+```
+
+## 4. Script Function Details
+
+The generator script is located in `ctp/api/generator/`
 
 ### 1. `generator_function_const.py`
 
-- **作用**：**生成基础函数常量文件**
-- **功能**：
-  - 读取CTP的头文件 `ThostFtdcMdApi.h`、`ThostFtdcTraderApi.h.h`
-  - 解析其中的函数，生成 `ctp_function_const.py`（函数常量定义）
+- **Purpose**: **Generates basic function constant files**
+- **Function**:
+- Reads the CTP header files `ThostFtdcMdApi.h` and `ThostFtdcTraderApi.h.h`
+- Parses the functions therein and generates `ctp_function_const.py` (function constant definitions)
 
 ### 2. `generate_data_type.py`
 
-- **作用**：**生成数据类型定义文件**
-- **功能**：
-  - 读取CTP的头文件 `ThostFtdcUserApiDataType.h`
-  - 解析其中的 `#define` 常量定义和 `typedef` 类型定义
-  - 生成 `ctp_function_const.py`
+- **Purpose**: **Generates data type definition files**
+- **Function**:
+- Reads the CTP header file `ThostFtdcUserApiDataType.h`
+- Parses the `#define` constant definitions and `typedef` type definitions therein
+- Generates `ctp_function_const.py`
 
 ### 3. `generate_struct.py`
-- **作用**：**生成结构体定义文件**
-- **功能**：
-  - 读取CTP的头文件 `ThostFtdcUserApiStruct.h`
-  - 依赖 `ctp_typedef.py` 中的类型映射
-  - 解析C++结构体定义，生成Python字典格式的结构体定义文件 `ctp_struct.py`
+
+- **Purpose**: **Generates structure definition files**
+- **Function**:
+- Reads the CTP header file `ThostFtdcUserApiStruct.h`
+- Relies on the type mappings in `ctp_typedef.py`
+- Parses the C++ structure definition and generates the Python dictionary-formatted structure definition file `ctp_struct.py`
 
 ### 4. `generate_api_functions.py`
-- **作用**：**生成API函数绑定代码**
-- **功能**：
-  - 读取CTP的API头文件（如 `ThostFtdcTraderApi.h`、`ThostFtdcMdApi.h`）
-  - 依赖 `ctp_struct.py` 中的结构体定义
-  - 生成大量的C++源代码文件，用于Python绑定
+
+- **Purpose**: **Generates API function binding code**
+- **Function**:
+- Reads the CTP API header files (such as `ThostFtdcTraderApi.h` and `ThostFtdcMdApi.h`)
+- Relies on the structure definitions in `ctp_struct.py`
+- Generates a large number of C++ source code files for Python bindings
 
 ### 5. `generate_dll_entry.py`
 
-- **作用**：**生成C++ DLL入口点代码文件**
-- **功能**：
-  - 生成`dllmain.cpp`、`stdafx.cpp`、`stdafx.h`三个文件
-  - **dllmain.cpp**: 包含标准的DLL入口点函数，处理进程和线程的加载/卸载
-  - **stdafx.cpp**: 简单的预编译头包含文件
-  - **stdafx.h**: 包含Windows API头文件和常用定义
+- **Purpose**: **Generates the C++ DLL entry point code file**
+- **Function**:
+- Generates three files: `dllmain.cpp`, `stdafx.cpp`, and `stdafx.h`.
+
+- **dllmain.cpp**: Contains the standard DLL entry point function, handling process and thread loading/unloading.
+- **stdafx.cpp**: A simple precompiled header include file.
+- **stdafx.h**: Contains the Windows API header files and common definitions.
 
 ### 6. `generate_cpp.py`
 
-- **作用**：**生成cpp和h文件**
-- **功能**：
-  - 分别在`ctp.api.src.ctpmd`和`ctp.api.src.ctptd`中生成`ctpmd.cpp`、`ctpmd.h`和`ctptd.cpp`、`ctptd.h`四个文件
-  - 头文件包含完整的类声明和函数原型
-  - CPP文件包含所有实现和绑定
+- **Purpose**: **Generates `cpp` and `h` files**
+- **Function**: **Generates `ctpmd.cpp`, `ctpmd.h`, and `ctptd.cpp`, `ctptd.h`, for `ctp.api.src.ctpmd` and `ctp.api.src.ctptd`, respectively.
+- The header file contains complete class declarations and function prototypes.
+- The `cpp` file contains all implementation and bindings.
 
 ### 7. `generate_onekey.py`
 
-- **作用**：**一键组装所有md和td header、source等文件生成cpp和h文件**
-- **功能**：
-  - 一键组装上述文件生成的文件及header、source等文件生成`ctpmd.cpp`、`ctpmd.h`和`ctptd.cpp`、`ctptd.h`四个文件
+- **Purpose**: **One-click assembles all md and td header, source, and other files to generate cpp and h files**
+- **Function**:
+- One-click assembles the files generated by the above files, as well as header, source, and other files, to generate four files: `ctpmd.cpp`, `ctpmd.h`, and `ctptd.cpp`, `ctptd.h`.
 
 ### 8. `build.py`
 
-- **作用**：**一键将CTP C++ API 编译为 Python API**
-- **功能**：
-  - 一键编译出 Python 可调用的 CTP API 文件，文件位于`ctp/api/`包括：
-    - `ctpmd.cp313-win_amd64.pyd`
-    - `ctptd.cp313-win_amd64.pyd`
-    - `ctpmd.pyi`
-    - `ctptd.pyi`
+- **Purpose**: **One-click compiles the CTP C++ API into a Python API**
+- **Function**:
+- One-click compiles the Python-callable CTP API files, located in `ctp/api/`. These files include:
+- `ctpmd.cp313-win_amd64.pyd`
+- `ctptd.cp313-win_amd64.pyd`
+- `ctpmd.pyi`
+- `ctptd.pyi`
 
-文件依赖关系：
+File Dependencies:
 
-1. **`generator_function_const.py`** → 生成`ctp_function_const.py`
-2. **`generate_data_type.py`** → 生成 `ctp_typedef.py` 和 `ctp_constant.py`
-3. **`generate_struct.py`**(依赖`ctp_typedef.py`) → 生成 `ctp_struct.py`
-4. **`generate_api_functions.py`**(依赖`ctp_struct.py`、`ctp_function_const.py`) → 生成md和td多个API header、source绑定文件
-5. **`generate_dll_entry.py`** → 生成 `dllmain.cpp`、`stdafx.cpp`、`stdafx.h`
-6. **`generate_cpp.py`**(依赖上述所有文件生成的文件及header、source文件) →  生成`ctpmd.cpp`、`ctpmd.h`和`ctptd.cpp`、`ctptd.h`
-7. **`generate_onekey.py`** → 一键组装出`ctpmd.cpp`、`ctpmd.h`和`ctptd.cpp`、`ctptd.h`文件(相当于上述过程一键执行)
-8. **`build.py`**(依赖`ctp/api/src/`下的`ctpmd`和`ctptd`模块) → 一键编译出`ctpmd.cp313-win_amd64.pyd`、`ctptd.cp313-win_amd64.pyd`、`ctpmd.pyi`、`ctptd.pyi`
+1. **`generator_function_const.py`** → Generate `ctp_function_const.py`
+2. **`generate_data_type.py`** → Generate `ctp_typedef.py` and `ctp_constant.py`
+3. **`generate_struct.py`** (depends on `ctp_typedef.py`) → Generate `ctp_struct.py`
+4. **`generate_api_functions.py`** (depends on `ctp_struct.py` and `ctp_function_const.py`) → Generate multiple API header and source binding files for `md` and `td`
+5. **`generate_dll_entry.py`** → Generate `dllmain.cpp`, `stdafx.cpp`, and `stdafx.h`
+6. **`generate_cpp.py`** (depends on all the above files, as well as the generated header and source files) → Generates `ctpmd.cpp`, `ctpmd.h`, and `ctptd.cpp` and `ctptd.h`
+7. **`generate_onekey.py`** → Assembles `ctpmd.cpp`, `ctpmd.h`, and `ctptd.cpp` and `ctptd.h` files with one click (equivalent to executing the above process with one click)
+8. **`build.py`** (depends on the `ctpmd` and `ctptd` modules in `ctp/api/src/`) → Compiles `ctpmd.cp313-win_amd64.pyd`, `ctptd.cp313-win_amd64.pyd`, `ctpmd.pyi`, and `ctptd.pyi` with one click
 
+## 5. Script Usage
 
-## 5. 脚本用途
+The code generated by these scripts is used to:
 
-这些脚本最终生成的代码用于：
-- 将CTP的C++ API封装成Python可调用的接口
-- 自动处理数据类型转换
-- 生成回调函数的Python绑定
-- 生成请求函数的Python绑定
+- Encapsulate the CTP C++ API into a Python-callable interface
+- Automatically handle data type conversion
+- Generate Python bindings for callback functions
+- Generate Python bindings for request functions
 
+## 6. Advantages
 
-## 6. 优势
+- Use pybind to bind C++ to the Python CTP API, offering superior performance compared to SWIG conversion.
+- Automatic synchronization: When the CTP official header files are updated, the latest h, dll, so, and lib files are replaced. After executing the generated script, the script will automatically reflect the latest virtual functions.
+- Easy maintenance: No need to manually update a large number of hard-coded function declarations.
+- Reduced errors: Avoid omissions or errors that may result from manual maintenance.
+- Improved efficiency: Developers only need to focus on business logic, without worrying about changes to the underlying interfaces.
 
-- 使用pybind将C++与Python CTP API绑定，性能优于Swig转换方式。
-- 自动同步: 当CTP官方更新头文件时，替换最新h、dll、so、lib文件，执行生成脚本后，脚本会自动反映最新的虚函数
-- 易于维护: 无需手动更新大量硬编码的函数声明
-- 减少错误: 避免了手动维护可能导致的遗漏或错误
-- 提高效率: 开发者只需关注业务逻辑，不用担心底层接口变化
+Summary: This is a complete code generation toolchain that automatically generates Python bindings for the CTP API, eliminating the need to manually write repetitive binding code and improving maintainability and robustness.
 
-总结：这是一个完整的代码生成工具链，用于自动化生成CTP API的Python绑定代码，避免手工编写大量重复的绑定代码，具有更好的可维护性和健壮性！
+## 7. Community Support
+
+- **Technical Exchange (QQ Group)**: `446042777`
