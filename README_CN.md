@@ -129,14 +129,14 @@ ctp/
 
 generator脚本位于`ctp/api/generator/`
 
-### 1. `generator_function_const.py`
+1. `generator_function_const.py`
 
 - **作用**：**生成基础函数常量文件**
 - **功能**：
   - 读取CTP的头文件 `ThostFtdcMdApi.h`、`ThostFtdcTraderApi.h.h`
   - 解析其中的函数，生成 `ctp_function_const.py`（函数常量定义）
 
-### 2. `generate_data_type.py`
+2. `generate_data_type.py`
 
 - **作用**：**生成数据类型定义文件**
 - **功能**：
@@ -144,21 +144,23 @@ generator脚本位于`ctp/api/generator/`
   - 解析其中的 `#define` 常量定义和 `typedef` 类型定义
   - 生成 `ctp_function_const.py`
 
-### 3. `generate_struct.py`
+3. `generate_struct.py`
+
 - **作用**：**生成结构体定义文件**
 - **功能**：
   - 读取CTP的头文件 `ThostFtdcUserApiStruct.h`
   - 依赖 `ctp_typedef.py` 中的类型映射
   - 解析C++结构体定义，生成Python字典格式的结构体定义文件 `ctp_struct.py`
 
-### 4. `generate_api_functions.py`
+4. `generate_api_functions.py`
+
 - **作用**：**生成API函数绑定代码**
 - **功能**：
   - 读取CTP的API头文件（如 `ThostFtdcTraderApi.h`、`ThostFtdcMdApi.h`）
   - 依赖 `ctp_struct.py` 中的结构体定义
   - 生成大量的C++源代码文件，用于Python绑定
 
-### 5. `generate_dll_entry.py`
+5. `generate_dll_entry.py`
 
 - **作用**：**生成C++ DLL入口点代码文件**
 - **功能**：
@@ -167,7 +169,7 @@ generator脚本位于`ctp/api/generator/`
   - **stdafx.cpp**: 简单的预编译头包含文件
   - **stdafx.h**: 包含Windows API头文件和常用定义
 
-### 6. `generate_cpp.py`
+6. `generate_cpp.py`
 
 - **作用**：**生成cpp和h文件**
 - **功能**：
@@ -175,13 +177,13 @@ generator脚本位于`ctp/api/generator/`
   - 头文件包含完整的类声明和函数原型
   - CPP文件包含所有实现和绑定
 
-### 7. `generate_onekey.py`
+7. `generate_onekey.py`
 
 - **作用**：**一键组装所有md和td header、source等文件生成cpp和h文件**
 - **功能**：
   - 一键组装上述文件生成的文件及header、source等文件生成`ctpmd.cpp`、`ctpmd.h`和`ctptd.cpp`、`ctptd.h`四个文件
 
-### 8. `build.py`
+8. `build.py`
 
 - **作用**：**一键将CTP C++ API 编译为 Python API**
 - **功能**：
