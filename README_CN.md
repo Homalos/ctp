@@ -50,6 +50,7 @@ ctp/
 ├── 📁 README_CN.md							# 项目英文说明文件
 ├── 📁 build.py								# 扩展模块自动化编译脚本，组装了meson命令
 ├── 📁 demo.py								# 扩展模块使用示例
+├── 📁 hatch_build.py						# hatch钩子，用hatch打包时设置平台标识
 ├── 📁 meson.build							# meson构建配置文件
 ├── 📁 pyproject.toml						# Python项目管理配置文件，由uv自动生成
 └── 📁 uv.lock								# uv锁定文件，由uv自动生成
@@ -57,7 +58,7 @@ ctp/
 
 ## 3. 安装基础环境(已安装可跳过)
 
-1. 安装uv
+1. 安装UV
 
    On Windows
 
