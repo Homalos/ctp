@@ -7,6 +7,6 @@
 @Author     : Donny
 @Email      : donnymoving@gmail.com
 @Software   : PyCharm
-@Description: description
+@Description: 要编译的CTP版本号配置
 """
 ctp_version = "6.7.11"
