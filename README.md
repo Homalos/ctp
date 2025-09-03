@@ -86,7 +86,7 @@
    python build.py
    ```
 
-## 3. 详细说明
+## 4. 脚本功能详细说明
 
 generator脚本位于`ctp/api/generator/`
 
@@ -164,7 +164,7 @@ generator脚本位于`ctp/api/generator/`
 8. **`build.py`**(依赖`ctp/api/src/`下的`ctpmd`和`ctptd`模块) → 一键编译出`ctpmd.cp313-win_amd64.pyd`、`ctptd.cp313-win_amd64.pyd`、`ctpmd.pyi`、`ctptd.pyi`
 
 
-## 4. 文件用途
+## 5. 脚本用途
 
 这些脚本最终生成的代码用于：
 - 将CTP的C++ API封装成Python可调用的接口
@@ -173,7 +173,7 @@ generator脚本位于`ctp/api/generator/`
 - 生成请求函数的Python绑定
 
 
-## 5. 优势
+## 6. 优势
 
 - 使用pybind将C++与Python CTP API绑定，性能优于Swig转换方式。
 - 自动同步: 当CTP官方更新头文件时，替换最新h、dll、so、lib文件，执行生成脚本后，脚本会自动反映最新的虚函数
