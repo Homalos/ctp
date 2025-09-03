@@ -103,7 +103,7 @@ python generate_onekey.py
 python build.py
 ```
 
-## 4. Demo测试
+## 4. Demo test
 
 Fill in the CTP environment information in `demo.py` in the project root directory and run
 
