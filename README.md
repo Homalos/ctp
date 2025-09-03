@@ -10,7 +10,7 @@
 
 - **Python 3.13.6** 虚拟环境，由 uv 安装。
 
-- **CTP v6.7.11**：https://www.simnow.com.cn/static/apiDownload.action
+- **CTP v6.7.11**：官方下载地址 https://www.simnow.com.cn/static/apiDownload.action
 
 - **Meson + Ninja**: 现代化的C++扩展构建系统。
 
