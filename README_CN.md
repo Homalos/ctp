@@ -14,22 +14,48 @@
 本项目使用以下环境编译，若自行使用其他工具版本，请做相应调整。
 
 - **Windows 11 + MSVC 2022**
-
 - **Python 3.13.6** 虚拟环境，由 uv 安装。
-
-- **CTP v6.7.11**：官方下载地址 https://www.simnow.com.cn/static/apiDownload.action
-
+- **CTP v6.7.11**：[CTP官方下载地址](https://www.simnow.com.cn/static/apiDownload.action)
 - **Meson + Ninja**: 现代化的C++扩展构建系统。
-
-  Meson: 类似于Make、CMake，它的主要任务是配置编译环境、生成编译指令（比如给Ninja），并管理整个编译过程。它本身并不直接编译代码，而是驱动像Ninja这样的工具来完成。
-
 - **Pybind11**: Python - C++绑定。
-
-  Pybind11: 轻量级的 C++ 库，用于将 C++ 代码暴露（绑定）给 Python 解释器。它允许 Python 代码像调用普通 Python 模块一样，无缝地调用 C++ 编写的函数和类。其核心目标是提供一个极致简单、近乎零样板代码的接口，能轻松地将 C++ 的高性能计算能力与 Python 的易用性和庞大的生态系统结合起来。
-
 - **uv**: 现代化Python包管理器，提供更快的安装速度和更智能的依赖解析。
 
-## 2. 安装基础环境(已安装可跳过)
+## 2. 项目结构
+
+```reStructuredText
+ctp/
+├── 📁 assets/								# 资源文件
+├── 📁 ctp/ 								# CTP接口模块
+│   ├── 📁 api/ 							# CTP API模块
+│   │   ├── 📁 generator/ 					# C++与Python绑定生成脚本
+│   │   ├── 📁 include/ 					# CTP API头文件
+│   │   ├── 📁 libs/ 						# CTP API静态库文件
+│   │   ├── 📁 src/ 						# CTP与Python绑定代码文件
+│   │   ├── 📁 __init__.py 					# MdApi和TdApi初始化导入
+│   │   ├── 📁 ctpmd.cp313-win_amd64.pyd	# C++编译为Python的行情扩展模块
+│   │   ├── 📁 ctpmd.pyi 					# 行情扩展模块对应的存根文件
+│   │   ├── 📁 ctptd.cp313-win_amd64.pyd	# C++编译为Python的交易扩展模块
+│   │   ├── 📁 ctptd.pyi 					# 交易扩展模块对应的存根文件
+│   │   ├── 📁 thostmduserapi_se.dll		# Windows CTP行情API动态链接库
+│   │   ├── 📁 thostmduserapi_se.so			# Linuxs CTP行情API动态链接库
+│   │   ├── 📁 thosttraderapi_se.dll		# Windows CTP交易API动态链接库
+│   │   ├── 📁 thosttraderapi_se.so			# Linuxs CTP交易API动态链接库
+│   ├── 📁 __init__.py						# CTP版本配置文件
+│   ├── 📁 ctp.h							# 任务处理及编码转换
+├── 📁 doc/									# 项目相关文档
+├── 📁 .gitignore							# git提交忽略文件，由uv自动生成
+├── 📁 .python-version						# 项目Python版本文件，由uv自动生成
+├── 📁 LICENSE								# 项目License文件
+├── 📁 README.md							# 项目中文说明文件
+├── 📁 README_CN.md							# 项目英文说明文件
+├── 📁 build.py								# 扩展模块自动化编译脚本，组装了meson命令
+├── 📁 demo.py								# 扩展模块使用示例
+├── 📁 meson.build							# meson构建配置文件
+├── 📁 pyproject.toml						# Python项目管理配置文件，由uv自动生成
+└── 📁 uv.lock								# uv锁定文件，由uv自动生成
+```
+
+## 3. 安装基础环境(已安装可跳过)
 
 1. 安装uv
 
@@ -59,7 +85,7 @@
    uv python install 3.13
    ```
 
-## 3. 使用
+## 4. 使用
 
 1. 安装 Python 虚拟环境及依赖(根目录下执行)
 
@@ -93,13 +119,13 @@
    python build.py
    ```
 
-## 4. Demo测试
+## 5. Demo测试
 
 在项目根目录下 `demo.py`中填入 CTP 环境信息后运行
 
 ![run_result_2025_09_03_112244](assets/run_result_2025_09_03_112244.png)
 
-## 5. 脚本功能详细说明
+## 6. 脚本功能详细说明
 
 generator脚本位于`ctp/api/generator/`
 
@@ -177,7 +203,7 @@ generator脚本位于`ctp/api/generator/`
 8. **`build.py`**(依赖`ctp/api/src/`下的`ctpmd`和`ctptd`模块) → 一键编译出`ctpmd.cp313-win_amd64.pyd`、`ctptd.cp313-win_amd64.pyd`、`ctpmd.pyi`、`ctptd.pyi`
 
 
-## 6. 脚本用途
+## 7. 脚本用途
 
 这些脚本最终生成的代码用于：
 - 将CTP的C++ API封装成Python可调用的接口
@@ -186,7 +212,7 @@ generator脚本位于`ctp/api/generator/`
 - 生成请求函数的Python绑定
 
 
-## 7. 优势
+## 8. 优势
 
 - 使用pybind将C++与Python CTP API绑定，性能优于Swig转换方式。
 - 自动同步: 当CTP官方更新头文件时，替换最新h、dll、so、lib文件，执行生成脚本后，脚本会自动反映最新的虚函数
@@ -196,10 +222,16 @@ generator脚本位于`ctp/api/generator/`
 
 总结：这是一个完整的代码生成工具链，用于自动化生成CTP API的Python绑定代码，避免手工编写大量重复的绑定代码，具有更好的可维护性和健壮性！
 
-## 8. 社区支持
+## 9. 社区支持
 
 - **技术交流 (QQ Group)**: `446042777`
 
-## 9. 免责声明
+## 10. 免责声明
 
 **[免责声明内容](doc/免责声明.md)**
+
+## 11. 补充
+
+**Meson**: 类似于Make、CMake，它的主要任务是配置编译环境、生成编译指令（比如给Ninja），并管理整个编译过程。它本身并不直接编译代码，而是驱动像Ninja这样的工具来完成。
+
+**Pybind11**: 轻量级的 C++ 库，用于将 C++ 代码暴露（绑定）给 Python 解释器。它允许 Python 代码像调用普通 Python 模块一样，无缝地调用 C++ 编写的函数和类。其核心目标是提供一个极致简单、近乎零样板代码的接口，能轻松地将 C++ 的高性能计算能力与 Python 的易用性和庞大的生态系统结合起来。
