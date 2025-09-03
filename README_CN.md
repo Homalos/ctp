@@ -226,6 +226,7 @@ generator脚本位于`ctp/api/generator/`
 ## 9. 社区支持
 
 - **技术交流 (QQ Group)**: `446042777`
+- [pypi.org](https://pypi.org/project/homalos-ctp/6.7.11.1/)
 
 ## 10. 免责声明
 

@@ -242,6 +242,7 @@ Summary: This is a complete code generation toolchain that automatically generat
 ## 9. Community Support
 
 - **Technical Exchange (QQ Group)**: `446042777`
+- [pypi.org](https://pypi.org/project/homalos-ctp/6.7.11.1/)
 
 ## 10. Disclaimer
 
