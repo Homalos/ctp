@@ -294,8 +294,8 @@ if __name__ == '__main__':
     
     # CTP配置（使用SimNow测试环境）
     ctp_config = {
-        "user_id": "160219",  # 用户名
-        "password": "donny@103010",  # 密码
+        "user_id": "",  # 用户名
+        "password": "",  # 密码
         "broker_id": "9999",  # 经纪商代码
         "md_address": "tcp://182.254.243.31:30011",  # 行情服务器地址
         # "md_address": "tcp://182.254.243.31:40011",  # 行情服务器地址
