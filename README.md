@@ -120,7 +120,7 @@ uv add pybind11-stubgen
 
 .venv\Scripts\activate
 
-cd ctp\api\generator
+cd homalos-ctp\api\generator
 ```
 
 ```bash

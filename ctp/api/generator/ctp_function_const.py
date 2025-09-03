@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName	: ctp_function_const.py
 @Date		: 2025-09-03 14:41:07.155071
 @Author		: Donny
 @Email		: donnymoving@gmail.com
 @Software	: PyCharm
-@Description: ctp md和td基础函数名称文件， 不是 Req 和 On 开头的函数
+@Description: homalos-ctp md和td基础函数名称文件， 不是 Req 和 On 开头的函数
 """
 
 

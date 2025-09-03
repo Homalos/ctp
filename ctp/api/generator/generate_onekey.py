@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName   : generate_onekey.py
 @Date       : 2025/9/1 15:20
 @Author     : Donny

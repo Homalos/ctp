@@ -29,7 +29,7 @@ class DllEntryGenerator:
         """
         初始化生成器
         """
-        self.prefix = prefix  # ctp/tts
+        self.prefix = prefix  # homalos-ctp/tts
         self.name = name  # md/td
         self.output_path = "."  # 输出目录
         # 输出目录名称，例如：ctpmd、ctptd
@@ -145,8 +145,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 
 if __name__ == "__main__":
-    generator = DllEntryGenerator("ctp", "md")
+    generator = DllEntryGenerator("homalos-ctp", "md")
     generator.run()
 
-    generator = DllEntryGenerator("ctp", "td")
+    generator = DllEntryGenerator("homalos-ctp", "td")
     generator.run()

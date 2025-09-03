@@ -1,5 +1,5 @@
 [project]
-name = "ctp"
+name = "homalos-ctp"
 dynamic = ["version"]
 description = "CTP Python API extension module construction."
 readme = "README.md"
@@ -13,6 +13,7 @@ dependencies = [
     "meson-python>=0.18.0",
     "pybind11>=3.0.1",
     "pybind11-stubgen>=2.5.5",
+    "twine>=6.1.0",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -84,7 +85,7 @@ packages = [
     "docs"
 ]
 ## 强制不使用 pure Python 标签
-#force-include = { "ctp/api" = "ctp/api" }
+#force-include = { "homalos-ctp/api" = "homalos-ctp/api" }
 # 排除不需要的文件
 exclude = [
     "ctp/api/__pycache__",

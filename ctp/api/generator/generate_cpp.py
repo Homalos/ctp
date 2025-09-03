@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName   : generate_cpp.py
 @Date       : 2025/8/27 14:53
 @Author     : Donny
@@ -22,7 +22,7 @@ class GenerateCpp:
     
     def __init__(self, filename: str, prefix: str, name: str):
         self.filename: str = filename  # ../include/ThostFtdcMdApi.h/../include/ThostFtdcTraderApi.h
-        self.prefix: str = prefix  # ctp/tts
+        self.prefix: str = prefix  # homalos-ctp/tts
         self.name: str = name  # md/td
 
         if self.name == "md":
@@ -35,8 +35,8 @@ class GenerateCpp:
         self.h_filename = Path(self.filename).name  # ThostFtdcMdApi.h/ThostFtdcTraderApi.h
         self.file_prefix: str = f"{self.prefix}{self.name}"
 
-        self.output_filename: str = f"{self.file_prefix}.cpp"  # 例如：ctp/ctpmd.cpp
-        self.output_header_filename: str = f"{self.file_prefix}.h"  # 例如：ctp/ctpmd.h
+        self.output_filename: str = f"{self.file_prefix}.cpp"  # 例如：homalos-ctp/ctpmd.cpp
+        self.output_header_filename: str = f"{self.file_prefix}.h"  # 例如：homalos-ctp/ctpmd.h
 
         # 定义所需的文件
         self.header_files = {
@@ -344,9 +344,9 @@ PYBIND11_MODULE(ctptd, m)
 #include "stdafx.h"
 #endif
 
-#include "ctp.h"
+#include "homalos-ctp.h"
 #include "pybind11/pybind11.h"
-#include "ctp/api/include/{self.h_filename}"
+#include "homalos-ctp/api/include/{self.h_filename}"
 
 using namespace pybind11;
 
@@ -438,8 +438,8 @@ using namespace pybind11;
 
     def generate_cpp_file(self) -> str:
         """生成CPP文件内容"""
-        cpp_content = f"""// ctp{self.name}.cpp : 定义 DLL 应用程序的导出函数。
-#include "ctp{self.name}.h"
+        cpp_content = f"""// homalos-ctp{self.name}.cpp : 定义 DLL 应用程序的导出函数。
+#include "homalos-ctp{self.name}.h"
 
 
 ///-------------------------------------------------------------------------------------
@@ -618,8 +618,8 @@ using namespace pybind11;
 
 
 if __name__ == "__main__":
-    md_assembler = GenerateCpp("../include/ThostFtdcMdApi.h", "ctp", "md")
+    md_assembler = GenerateCpp("../include/ThostFtdcMdApi.h", "homalos-ctp", "md")
     md_assembler.run()
 
-    td_assembler = GenerateCpp("../include/ThostFtdcTraderApi.h", "ctp", "td")
+    td_assembler = GenerateCpp("../include/ThostFtdcTraderApi.h", "homalos-ctp", "td")
     td_assembler.run()

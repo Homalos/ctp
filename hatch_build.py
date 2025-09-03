@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName   : hatch_build.py
 @Date       : 2025/9/3 18:21
 @Author     : Donny
@@ -44,7 +44,7 @@ class CustomBuildHook(BuildHookInterface):
     @staticmethod
     def _has_native_extensions():
         """检查是否包含原生扩展文件"""
-        api_dir = os.path.join(os.getcwd(), "ctp", "api")
+        api_dir = os.path.join(os.getcwd(), "homalos-ctp", "api")
         if not os.path.exists(api_dir):
             return False
         

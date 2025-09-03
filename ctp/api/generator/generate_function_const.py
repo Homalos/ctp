@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName   : generate_function_const.py
 @Date       : 2025/8/28 14:31
 @Author     : Donny
@@ -19,7 +19,7 @@ from ctp.api.generator.generate_helper import underscore_to_camelcase, camel_to_
 class GeneratorFunctionConst:
     def __init__(self, filename: str, prefix: str, name: str, class_name: str) -> None:
         self.filename: str = filename  # "../include/ThostFtdcMdApi.h"或"../include/ThostFtdcTdApi.h"
-        self.prefix: str = prefix  # "ctp"或"tts"
+        self.prefix: str = prefix  # "homalos-ctp"或"tts"
         self.name: str = name  # "md"或"td"
         self.class_name: str = class_name  # "MdApi"或"TdApi"
         self.file_cpp = None
@@ -82,7 +82,7 @@ class GeneratorFunctionConst:
                 f.write("#!/usr/bin/env python\n")
                 f.write("# -*- coding: utf-8 -*-\n")
                 f.write("\"\"\"\n")
-                f.write("@ProjectName: ctp\n")
+                f.write("@ProjectName: homalos-ctp\n")
                 f.write(f"@FileName\t: {funcs_filename}\n")
                 f.write(f"@Date\t\t: {datetime.datetime.now()}\n")
                 f.write("@Author\t\t: Donny\n")
@@ -125,9 +125,9 @@ class GeneratorFunctionConst:
 
 
 if __name__ == "__main__":
-    md_const_generator = GeneratorFunctionConst("../include/ThostFtdcMdApi.h", "ctp", "md", "MdApi")
+    md_const_generator = GeneratorFunctionConst("../include/ThostFtdcMdApi.h", "homalos-ctp", "md", "MdApi")
     md_const_generator.run()
 
-    td_const_generator = GeneratorFunctionConst("../include/ThostFtdcTraderApi.h", "ctp", "td", "TdApi")
+    td_const_generator = GeneratorFunctionConst("../include/ThostFtdcTraderApi.h", "homalos-ctp", "td", "TdApi")
     td_const_generator.run()
 

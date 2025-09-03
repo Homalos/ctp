@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName   : generate_api_functions.py
 @Date       : 2025/8/27 14:53
 @Author     : Donny
@@ -27,7 +27,7 @@ class DataTypeGenerator:
 
     def __init__(self, filename: str, prefix: str) -> None:
         self.filename: str = filename  # "../include/ThostFtdcUserApiDataType.h"
-        self.prefix: str = prefix  # "ctp"或"tts"
+        self.prefix: str = prefix  # "homalos-ctp"或"tts"
         self.f_cpp = None
         self.f_define = None
         self.f_typedef = None
@@ -89,5 +89,5 @@ class DataTypeGenerator:
 
 
 if __name__ == "__main__":
-    generator = DataTypeGenerator("../include/ThostFtdcUserApiDataType.h", "ctp")
+    generator = DataTypeGenerator("../include/ThostFtdcUserApiDataType.h", "homalos-ctp")
     generator.run()

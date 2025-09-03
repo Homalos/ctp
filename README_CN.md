@@ -106,7 +106,7 @@ ctp/
    ```bash
    # 激活Python虚拟环境进入generator
    .venv\Scripts\activate
-   cd ctp\api\generator
+   cd homalos-ctp\api\generator
    ```
    ```bash
    # 一键生成绑定文件

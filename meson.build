@@ -1,5 +1,5 @@
 project(
-  'ctp',
+  'homalos-ctp',
   'cpp',
   version: '6.7.11.1',
   license: 'MIT',
@@ -44,7 +44,7 @@ thosttraderapi_lib = []
 # 初始化其他编译选项
 extra_link_args = []
 install_rpath_value = ''
-api_abs_dir = 'ctp/api'
+api_abs_dir = 'homalos-ctp/api'
 
 # 设置Windows特定编译选项
 if host_machine.system() == 'windows'
@@ -138,8 +138,8 @@ td_module = py.extension_module(
 
 # 安装Python源代码
 python_files = [
-  ['ctp/__init__.py', 'ctp'],
-  ['ctp/api/__init__.py', 'ctp/api']
+  ['homalos-ctp/__init__.py', 'homalos-ctp'],
+  ['homalos-ctp/api/__init__.py', 'homalos-ctp/api']
 ]
 
 foreach file : python_files
@@ -159,7 +159,7 @@ if host_machine.system() == 'windows'
 
   install_data(
     api_libs,
-    install_dir: py.get_install_dir() / 'ctp/api'
+    install_dir: py.get_install_dir() / 'homalos-ctp/api'
   )
 else  # Linux
   api_libs = [
@@ -169,6 +169,6 @@ else  # Linux
 
   install_data(
     api_libs,
-    install_dir: py.get_install_dir() / 'ctp/api'
+    install_dir: py.get_install_dir() / 'homalos-ctp/api'
   )
 endif

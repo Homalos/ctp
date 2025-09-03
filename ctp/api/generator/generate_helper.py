@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName   : generate_helper.py
 @Date       : 2025/8/28 11:41
 @Author     : Donny
@@ -21,7 +21,7 @@ def create_output_dir(output_dir_name: str) -> str:
     # 获取当前文件的Path对象
     current_file = Path(__file__).resolve()
 
-    # 获取当前文件所在的目录父目录 /ctp/api
+    # 获取当前文件所在的目录父目录 /homalos-ctp/api
     parent_path: Path = current_file.parent.parent
 
     output_path: Path = Path(parent_path / last_parent_dir_name / output_dir_name)

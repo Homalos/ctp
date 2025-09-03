@@ -11,7 +11,7 @@
 
 ## Important
 
-Before using CTP (hereinafter referred to as "this system"), please carefully read and fully understand the following terms. By using this system, you are deemed to have accepted the entire content of this disclaimer.
+Before using homalos-ctp (hereinafter referred to as "this system"), please carefully read and fully understand the following terms. By using this system, you are deemed to have accepted the entire content of this disclaimer.
 
 ## Disclaimer Content
 

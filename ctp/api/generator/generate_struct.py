@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@ProjectName: ctp
+@ProjectName: homalos-ctp
 @FileName   : generate_struct.py
 @Date       : 2025/8/27 14:53
 @Author     : Donny
@@ -20,7 +20,7 @@ class StructGenerator:
 
     def __init__(self, filename: str, prefix: str) -> None:
         self.filename: str = filename  # "../include/ThostFtdcUserApiStruct.h"
-        self.prefix: str = prefix  # "ctp"或"tts"
+        self.prefix: str = prefix  # "homalos-ctp"或"tts"
         self.typedefs: dict[str, str] = {}
         self.f_cpp = None
         self.f_struct = None
@@ -113,5 +113,5 @@ class StructGenerator:
 
 
 if __name__ == "__main__":
-    generator = StructGenerator("../include/ThostFtdcUserApiStruct.h", "ctp")
+    generator = StructGenerator("../include/ThostFtdcUserApiStruct.h", "homalos-ctp")
     generator.run()
