@@ -44,8 +44,9 @@ class CustomBuildHook(BuildHookInterface):
     @staticmethod
     def _has_native_extensions():
         """检查是否包含原生扩展文件"""
-        api_dir = os.path.join(os.getcwd(), "homalos-ctp", "api")
+        api_dir = os.path.join(os.getcwd(), "ctp", "api")
         if not os.path.exists(api_dir):
+            print(f"原生扩展目录不存在: {api_dir}")
             return False
         
         # 检查是否有 .pyd 或 .so 文件
@@ -53,6 +54,7 @@ class CustomBuildHook(BuildHookInterface):
             if file.endswith(('.pyd', '.so')):
                 print(f"检测到原生扩展文件: {file}")
                 return True
+        print(f"在 {api_dir} 中未检测到原生扩展文件")
         return False
 
     @staticmethod

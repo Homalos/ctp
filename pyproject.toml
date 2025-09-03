@@ -63,7 +63,6 @@ include = [
     "meson.build",
     "README.md",
     "README_CN.md",
-    "assets",
     "docs"
 ]
 # 显式指定要包含的文件模式
@@ -81,11 +80,8 @@ packages = [
     "meson.build",
     "README.md",
     "README_CN.md",
-    "assets",
     "docs"
 ]
-## 强制不使用 pure Python 标签
-#force-include = { "homalos-ctp/api" = "homalos-ctp/api" }
 # 排除不需要的文件
 exclude = [
     "ctp/api/__pycache__",
