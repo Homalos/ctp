@@ -22,36 +22,67 @@
 
 - **uv**: 现代化Python包管理器，提供更快的安装速度和更智能的依赖解析。
 
-## 2. 使用方法
+## 2. 安装基础环境(已安装可跳过)
 
-执行下述命令前请确保已安装 uv
+1. 安装uv
 
-1. 安装 Python 虚拟环境及依赖
+   On Windows
+
+   **全局安装(推荐方式)**
 
    ```bash
-   cd ctp
-   # 使用UV创建指定版本的Python虚拟环境
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+
+   **单独在某个 Python 环境中安装**
+
+   ```bash
+   pip install uv
+   ```
+
+   On Linux
+
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+2. 安装 Python**(全局安装进行这一步)**，我自己用的是 3.13.6，你可以安装自己需要的版本
+
+   ```bash
+   uv python install 3.13
+   ```
+
+## 3. 使用
+
+1. 安装 Python 虚拟环境及依赖(根目录下执行)
+
+   ```bash
+   # 使用uv在当前项目下创建指定版本的Python虚拟环境
    uv venv --python 3.13 .venv
    ```
    ```bash
+   # 安装依赖库
    uv add meson-python
    uv add pybind11
    uv add pybind11-stubgen
    ```
-   
+
 2. 在`generator`目录下执行生成一键生成脚本(生成 CTP C++ API 的 Python 绑定代码)
 
    ```bash
+   # 激活Python虚拟环境进入generator
    .venv\Scripts\activate
    cd ctp\api\generator
    ```
    ```bash
+   # 一键生成绑定文件
    python generate_onekey.py
    ```
-   
+
 3. 根目录执行如下构建脚本，生成 CTP 的 C++ API 封装成 Python 可调用的接口
 
    ```bash
+   # 一键编译出CTP Python API
    python build.py
    ```
 

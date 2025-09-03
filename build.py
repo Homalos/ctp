@@ -1,4 +1,5 @@
 import os
+import platform
 import shutil
 import subprocess
 import sys
@@ -6,10 +7,11 @@ import sysconfig
 
 
 def check_and_install_stubgen():
-    """检查并安装 pybind11-stubgen"""
+    """检查并安装基础依赖工具"""
     # 获取 Python 版本
     print("正在检查当前 Python 版本...")
     subprocess.run([sys.executable, '-c', 'import sys; print(sys.version)'])
+
     try:
         import mesonbuild
         print("meson-python 已安装")
