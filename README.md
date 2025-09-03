@@ -204,3 +204,7 @@ Summary: This is a complete code generation toolchain that automatically generat
 ## 7. Community Support
 
 - **Technical Exchange (QQ Group)**: `446042777`
+
+## 8. Disclaimer
+
+**[Disclaimer content](doc/Disclaimer.md)**
