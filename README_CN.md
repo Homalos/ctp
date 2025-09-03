@@ -24,13 +24,13 @@
 
 ```reStructuredText
 ctp/
-├── 📁 assets/								# 资源文件
-├── 📁 ctp/ 								# CTP接口模块
-│   ├── 📁 api/ 							# CTP API模块
-│   │   ├── 📁 generator/ 					# C++与Python绑定生成脚本
-│   │   ├── 📁 include/ 					# CTP API头文件
-│   │   ├── 📁 libs/ 						# CTP API静态库文件
-│   │   ├── 📁 src/ 						# CTP与Python绑定代码文件
+├── 📂 assets/								# 资源文件
+├── 📂 ctp/ 								# CTP接口模块
+│   ├── 📂 api/ 							# CTP API模块
+│   │   ├── 📂 generator/ 					# C++与Python绑定生成脚本
+│   │   ├── 📂 include/ 					# CTP API头文件
+│   │   ├── 📂 libs/ 						# CTP API静态库文件
+│   │   ├── 📂 src/ 						# CTP与Python绑定代码文件
 │   │   ├── 📁 __init__.py 					# MdApi和TdApi初始化导入
 │   │   ├── 📁 ctpmd.cp313-win_amd64.pyd	# C++编译为Python的行情扩展模块
 │   │   ├── 📁 ctpmd.pyi 					# 行情扩展模块对应的存根文件
@@ -42,7 +42,7 @@ ctp/
 │   │   ├── 📁 thosttraderapi_se.so			# Linuxs CTP交易API动态链接库
 │   ├── 📁 __init__.py						# CTP版本配置文件
 │   ├── 📁 ctp.h							# 任务处理及编码转换
-├── 📁 doc/									# 项目相关文档
+├── 📂 docs/								# 项目相关文档
 ├── 📁 .gitignore							# git提交忽略文件，由uv自动生成
 ├── 📁 .python-version						# 项目Python版本文件，由uv自动生成
 ├── 📁 LICENSE								# 项目License文件
@@ -230,7 +230,7 @@ generator脚本位于`ctp/api/generator/`
 
 ## 10. 免责声明
 
-**[免责声明内容](doc/免责声明.md)**
+**[免责声明内容](docs/免责声明.md)**
 
 ## 11. 补充
 
