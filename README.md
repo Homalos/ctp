@@ -107,7 +107,7 @@ python build.py
 
 Fill in the CTP environment information in `demo.py` in the project root directory and run
 
-![run_result_2025_09_03_112244](D:\Project\PycharmProjects\ctp\assets\run_result_2025_09_03_112244.png)
+![run_result_2025_09_03_112244](assets/run_result_2025_09_03_112244.png)
 
 ## 5. Script Function Details
 

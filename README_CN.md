@@ -95,7 +95,7 @@
 
 在项目根目录下 `demo.py`中填入 CTP 环境信息后运行
 
-![run_result_2025_09_03_112244](D:\Project\PycharmProjects\ctp\assets\run_result_2025_09_03_112244.png)
+![run_result_2025_09_03_112244](assets/run_result_2025_09_03_112244.png)
 
 ## 5. 脚本功能详细说明
 
