@@ -154,7 +154,7 @@ inline string toUtf(const string &gb2312)
 #else
 iconv_t cd = iconv_open("UTF-8", "GB2312");
 
-int code_convert(char *inbuf, size_t inlen, char *outbuf, size_t outlen) 
+int code_convert(char *inbuf, size_t inlen, char *outbuf, size_t outlen)
 {
     char **pin = &inbuf;
     char **pout = &outbuf;

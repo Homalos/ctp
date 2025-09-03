@@ -1,0 +1,11 @@
+[project]
+name = "ctp"
+version = "0.1.0"
+description = "ctp api build"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "meson-python>=0.18.0",
+    "pybind11>=3.0.1",
+    "pybind11-stubgen>=2.5.5",
+]

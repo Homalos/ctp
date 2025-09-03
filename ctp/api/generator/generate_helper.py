@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 @ProjectName: ctp
-@FileName   : generator_helper.py
+@FileName   : generate_helper.py
 @Date       : 2025/8/28 11:41
 @Author     : Donny
 @Email      : donnymoving@gmail.com

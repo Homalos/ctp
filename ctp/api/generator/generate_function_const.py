@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 @ProjectName: ctp
-@FileName   : generator_function_const.py
+@FileName   : generate_function_const.py
 @Date       : 2025/8/28 14:31
 @Author     : Donny
 @Email      : donnymoving@gmail.com
@@ -13,7 +13,7 @@ import datetime
 import re
 from pathlib import Path
 
-from ctp.api.generator.generator_helper import underscore_to_camelcase, camel_to_underscore_upper
+from ctp.api.generator.generate_helper import underscore_to_camelcase, camel_to_underscore_upper
 
 
 class GeneratorFunctionConst:

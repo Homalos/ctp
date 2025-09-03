@@ -7,29 +7,34 @@
 @Author     : Donny
 @Email      : donnymoving@gmail.com
 @Software   : PyCharm
-@Description: 生成MD和TD API
+@Description: 生成API函数绑定代码
+功能：
+1. 读取CTP的API头文件（如 `ThostFtdcTraderApi.h`、`ThostFtdcMdApi.h`）
+2. 依赖 `ctp_struct.py` 中的结构体定义
+3. 生成大量的C++源代码文件，用于Python绑定
+
+注意：import CtpFunctionConst 可能会报错因为 ctp_function_const.py 可能还未生成
 """
 import importlib
 import re
 
-from ctp.api.generator.ctp_function_const import CtpFunctionConst
-from ctp.api.generator.generator_helper import replace_function_name, process_func_type, format_pointer_arg, \
+from ctp.api.generator.ctp_function_const import CtpFunctionConst  # noqa
+from ctp.api.generator.generate_helper import replace_function_name, process_func_type, format_pointer_arg, \
     format_equal_arg
 
 
 class GenerateApiFunc:
     """API生成器"""
     def __init__(self, filename: str, prefix: str, name: str, class_name: str) -> None:
-        """Constructor"""
-        self.filename: str = filename
-        self.prefix: str = prefix
-        self.name: str = name
-        self.class_name: str = class_name
+        self.filename: str = filename  # "../include/ThostFtdcMdApi.h"或"../include/ThostFtdcTraderApi.h"
+        self.prefix: str = prefix  # "ctp"或"tts"
+        self.name: str = name  # "md"或"td"
+        self.class_name: str = class_name  # "MdApi"或"TdApi"
 
         self.f_cpp = None
-        self.callbacks: dict[str, dict[str, str]] = {}
-        self.functions: dict[str, dict[str, str | dict[str, str]]] = {}
-        self.source_functions: dict[str, dict[str, str | dict[str, str]]] = {}
+        self.callbacks: dict[str, dict[str, str]] = {}  # 回调函数
+        self.functions: dict[str, dict[str, str | dict[str, str]]] = {}  # 函数
+        self.source_functions: dict[str, dict[str, str | dict[str, str]]] = {}  # source 函数
         self.lines: dict[str, str] = {}
         self.structs: dict[str, dict[str, str]] = {}
         self.function_names: list = []
@@ -46,6 +51,7 @@ class GenerateApiFunc:
 
     def run(self) -> None:
         """运行"""
+        print("5. 第五步：生成API函数文件")
         self.f_cpp = open(self.filename)
 
         for line in self.f_cpp:
@@ -65,7 +71,7 @@ class GenerateApiFunc:
         self.generate_source_on()  # callbacks
         self.generate_source_module()  # functions and callbacks
 
-        print("API生成成功")
+        print(f"{self.prefix} {self.name} API生成成功")
 
     def process_line(self, line: str) -> None:
         """处理每行"""
@@ -251,7 +257,9 @@ class GenerateApiFunc:
         filename = f"{self.prefix}_{self.name}_header_process.h"
         with open(filename, "w") as f:
             for name in self.callbacks.keys():
-                name = name.replace("On", "process")
+                # 更精确的字符串替换，只替换开头的"On"为"process"
+                if name.startswith("On"):
+                    name = "process" + name[2:]
                 line = f"void {name}(Task *task);\n\n"
                 f.write(line)
 
@@ -343,6 +351,12 @@ class GenerateApiFunc:
                                 converted_arg_types.append("int reqid")
                             elif arg_name == "pszFlowPath=\"\"" and arg_type == "const char":
                                 converted_arg_types.append("string pszFlowPath=\"\"")
+                            elif arg_name == "bIsUsingUdp=false" and arg_type == "const bool":
+                                converted_arg_types.append("bool bIsUsingUdp=false")
+                            elif arg_name == "bIsMulticast=false" and arg_type == "const bool":
+                                converted_arg_types.append("bool bIsMulticast=false")
+                            elif arg_name == "bIsProductionMode=true" and arg_type == "bool":
+                                converted_arg_types.append("bool bIsProductionMode=true")
                             elif arg_name == "pszFrontAddress" and arg_type == "char":
                                 converted_arg_types.append("string pszFrontAddress")
                             elif arg_name == "pszNsAddress" and arg_type == "char":
@@ -430,7 +444,9 @@ class GenerateApiFunc:
                     # 确保回调函数名以"On"开头
                     if not name.startswith("On"):
                         continue
-                    process_name = name.replace("On", "process")
+                    # 更精确的字符串替换，只替换开头的"On"为"process"
+                    if name.startswith("On"):
+                        process_name = "process" + name[2:]
                     content_parts.extend([
                         f"case {name.upper()}:\n",
                         "{\n",
@@ -448,8 +464,16 @@ class GenerateApiFunc:
         lines = []
 
         for name, callback_fields in self.callbacks.items():
-            process_name = name.replace("On", "process")
-            on_name = name.replace("On", "on")
+            # 更精确的字符串替换，只替换开头的"On"为"process"
+            if not name.startswith("On"):
+                continue
+            else:
+                process_name = "process" + name[2:]
+
+            if not name.startswith("On"):
+                continue
+            else:
+                on_name = "on" + name[2:]
 
             lines.append(f"void {self.class_name}::{process_name}(Task *task)\n{{")
             lines.append("\tgil_scoped_acquire acquire;")
@@ -510,15 +534,16 @@ class GenerateApiFunc:
                 for func_name, func_info in self.source_functions.items():
                     # 定义字符串 list
                     arg_list = []
-                    func_type: str = func_info.get('func_type', '')
+                    old_func_type: str = func_info.get('func_type', '')
                     # 处理特殊函数返回类型为 void
-                    func_type = process_func_type(func_type)
+                    new_func_type = process_func_type(old_func_type)
 
                     func_args: dict = func_info.get('func_args', {})
                     # 处理参数名称中的 =""和=''
                     for arg_name, arg_type in func_args.items():
                         # 处理参数名称，去除 =""和='' 部分（如果有的话）
                         clean_arg_name = arg_name.replace('=""', '').replace("=''", "")
+                        clean_arg_name = clean_arg_name.replace("=false", "").replace("=true", "")
                         # 参数类型 参数名称添加到 list
                         arg_list.append(f"{arg_type} {clean_arg_name}")
 
@@ -528,18 +553,42 @@ class GenerateApiFunc:
 
                     # 写函数声明
                     if func_name in {CtpFunctionConst.SUBSCRIBE_PRIVATE_TOPIC, CtpFunctionConst.SUBSCRIBE_PUBLIC_TOPIC}:
-                        f.write(f"{func_type} {self.class_name}::{lowercase_func_name}(int nType)\n")
+                        f.write(f"{new_func_type} {self.class_name}::{lowercase_func_name}(int nType)\n")
                     else:
-                        f.write(f"{func_type} {self.class_name}::{lowercase_func_name}({args_str})\n")
+                        f.write(f"{new_func_type} {self.class_name}::{lowercase_func_name}({args_str})\n")
                     f.write("{\n")
 
                     # 特殊函数处理
-                    if func_name in {CtpFunctionConst.CREATE_FTDC_MD_API, CtpFunctionConst.CREATE_FTDC_TRADER_API}:
-                        if not ',' in args_str and "string" in args_str and ' ' in args_str:
-                            arg_name = args_str.split(' ')[1]
-                            f.write(f"\tthis->api = {func_type}::{func_name}({arg_name}.c_str());\n")
-                            f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
-                            f.write("};\n\n")
+                    if func_name == CtpFunctionConst.CREATE_FTDC_MD_API:
+                        if ',' in args_str:
+                            args = args_str.split(',')
+
+                            if len(args) == 4:  # 如果有4个参数(CreateFtdcMdApi)
+                                if "string" in args_str and "bool" in args_str and ' ' in args_str:
+                                    # 第一个参数 pszFlowPath
+                                    arg_name1 = args[0].strip().split(' ')[1]
+                                    # 第二个参数 bIsUsingUdp
+                                    arg_name2 = args[1].strip().split(' ')[1]
+                                    # 第三个参数 bIsMulticast
+                                    arg_name3 = args[2].strip().split(' ')[1]
+                                    # 第四个参数 bIsProductionMode
+                                    arg_name4 = args[3].strip().split(' ')[1]
+
+                                f.write(f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str(), "
+                                        f"{arg_name2}, {arg_name3}, {arg_name4});\n")
+                                f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
+                                f.write("};\n\n")
+                    elif func_name == CtpFunctionConst.CREATE_FTDC_TRADER_API:
+                        if ',' in args_str:
+                            args = args_str.split(',')
+                            if len(args) == 2:  # 如果有2个参数(CreateFtdcTraderApi)
+                                if "string" in args_str and "bool" in args_str and ' ' in args_str:
+                                    arg_name1 = args[0].strip().split(' ')[1]
+                                    arg_name2 = args[1].strip().split(' ')[1]
+
+                                f.write(f"\tthis->api = {old_func_type}::{func_name}({arg_name1}.c_str(), {arg_name2});\n")
+                                f.write(f"\tthis->api->{CtpFunctionConst.REGISTER_SPI}(this);\n")
+                                f.write("};\n\n")
 
                     elif func_name == CtpFunctionConst.RELEASE:
                         f.write(f"\tthis->api->{func_name}();\n")
@@ -605,7 +654,7 @@ class GenerateApiFunc:
                             f.write(f"\tthis->api->{func_name}(({arg_type})nType);\n")
                             f.write("};\n\n")
 
-                    elif func_type == "int" and not ',' in args_str and "func_field" in func_info:
+                    elif new_func_type == "int" and not ',' in args_str and "func_field" in func_info:
                         if func_info["func_field"] in self.structs:
                             self._write_struct_fields(f, func_info["func_field"])
                             f.write(f"\tint i = this->api->{func_name}(&myreq);\n")
@@ -642,7 +691,10 @@ class GenerateApiFunc:
         try:
             with open(filename, "w") as f:
                 for name, d in self.callbacks.items():
-                    on_name = name.replace("On", "on")
+                    if not name.startswith("On"):
+                        continue
+                    else:
+                        on_name = "on" + name[2:]
 
                     args = []
                     bind_args = ["void", self.class_name, on_name]
@@ -694,7 +746,10 @@ class GenerateApiFunc:
                 lines.append("\n")
 
                 for name in self.callbacks.keys():
-                    processed_name = name.replace("On", "on")
+                    if not name.startswith("On"):
+                        continue
+                    else:
+                        processed_name = "on" + name[2:]
                     lines.append(f".def(\"{processed_name}\", &{self.class_name}::{processed_name})\n")
 
                 lines.append(";\n")

@@ -1,5 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+@ProjectName: ctp
+@FileName   : generate_api_functions.py
+@Date       : 2025/8/27 14:53
+@Author     : Donny
+@Email      : donnymoving@gmail.com
+@Software   : PyCharm
+@Description: 生成数据类型定义文件
+功能：
+1. 读取CTP的头文件 `ThostFtdcUserApiDataType.h`
+2. 解析其中的 `#define` 常量定义和 `typedef` 类型定义
+3. 生成 `ctp_constant.py`（常量定义）和 `ctp_typedef.py`（类型定义）
+
+ctp_typedef.py：数据类型映射定义文件，定义了CTP API中各种数据类型到Python类型的映射关系
+"""
 TYPE_CPP2PY = {
     "int": "int",
     "char": "char",
@@ -9,18 +24,17 @@ TYPE_CPP2PY = {
 
 
 class DataTypeGenerator:
-    """DataType生成器"""
 
     def __init__(self, filename: str, prefix: str) -> None:
-        """Constructor"""
-        self.filename: str = filename
-        self.prefix: str = prefix
+        self.filename: str = filename  # "../include/ThostFtdcUserApiDataType.h"
+        self.prefix: str = prefix  # "ctp"或"tts"
         self.f_cpp = None
         self.f_define = None
         self.f_typedef = None
 
     def run(self) -> None:
         """主函数"""
+        print("3. 第三步：生成API DataType文件")
         self.f_cpp = open(self.filename)
         self.f_define = open(f"{self.prefix}_constant.py", "w")
         self.f_typedef = open(f"{self.prefix}_typedef.py", "w")
@@ -75,5 +89,5 @@ class DataTypeGenerator:
 
 
 if __name__ == "__main__":
-    generator = DataTypeGenerator("../include/ctp/ThostFtdcUserApiDataType.h", "ctp")
+    generator = DataTypeGenerator("../include/ThostFtdcUserApiDataType.h", "ctp")
     generator.run()

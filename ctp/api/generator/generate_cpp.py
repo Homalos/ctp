@@ -2,23 +2,23 @@
 # -*- coding: utf-8 -*-
 """
 @ProjectName: ctp
-@FileName   : generate_md_cpp.py
+@FileName   : generate_cpp.py
 @Date       : 2025/8/27 14:53
 @Author     : Donny
 @Email      : donnymoving@gmail.com
 @Software   : PyCharm
-@Description: CTP MD API CPP文件自动拼装脚本
-从生成的header和source文件自动拼装生成完整的ctpmd.cpp文件和ctpmd.h文件
+@Description: CTP MD和TD API CPP文件自动拼装脚本
+从生成的header和source文件自动拼装生成完整的ctpmd.cpp、ctpmd.h、ctptd.cpp、ctptd.h文件
 """
 import os
 from pathlib import Path
 from typing import List
 
-from ctp.api.generator.generator_helper import create_output_dir
+from ctp.api.generator.generate_helper import create_output_dir
 
 
-class MdCppAssembler:
-    """MD CPP文件拼装器"""
+class GenerateCpp:
+    """MD和TD CPP文件拼装器"""
     
     def __init__(self, filename: str, prefix: str, name: str):
         self.filename: str = filename  # ../include/ThostFtdcMdApi.h/../include/ThostFtdcTraderApi.h
@@ -552,8 +552,6 @@ using namespace pybind11;
     
     def assemble(self) -> None:
         """拼装生成完整文件"""
-        print(f"开始拼装{self.prefix}{self.name}文件...")
-
         # 创建输出目录
         output_path = create_output_dir(self.file_prefix)
         if not output_path:
@@ -564,12 +562,10 @@ using namespace pybind11;
         full_output_filename = f"{output_path}/{self.output_filename}"
         
         # 生成头文件
-        print("生成头文件...")
         header_content = self.generate_header_file()
         header_content = self.fix_encoding_and_format(header_content)
         
         # 生成CPP文件
-        print("生成CPP文件...")
         cpp_content = self.generate_cpp_file()
         cpp_content = self.fix_encoding_and_format(cpp_content)
         
@@ -586,7 +582,6 @@ using namespace pybind11;
             with open(full_output_filename, 'w', encoding='gb2312') as f:
                 f.write(cpp_content)
             print(f"成功生成CPP文件: {full_output_filename}")
-            print(f"CPP文件大小: {len(cpp_content)} 字符")
         except Exception as e:
             print(f"写入CPP文件失败: {e}")
     
@@ -608,10 +603,8 @@ using namespace pybind11;
     
     def run(self):
         """运行拼装程序"""
-        print("=" * 50)
-        print(f"{self.prefix} {self.name} API CPP文件自动拼装器 v2.0")
-        print("=" * 50)
-        
+        print("6. 第六步：生成API cpp、h文件")
+
         # 检查必要的文件是否存在
         missing_files = self.check_required_files()
         
@@ -621,30 +614,12 @@ using namespace pybind11;
                 print(f"  - {file}")
             return
         
-        print("所有必要文件已找到，开始拼装...")
-
-        # 显示文件大小信息
-        print("\n源文件信息：")
-        all_files = list(self.header_files.values()) + list(self.source_files.values())
-        for file in all_files:
-            try:
-                with open(file, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                    size = len(content)
-                    lines = content.count('\n')
-                    print(f"  {file}: {size} 字符, {lines} 行")
-            except Exception as e:
-                print(f"  {file}: 读取失败 - {e}")
-
-        print("\n开始拼装...")
         self.assemble()
-        print("拼装完成！")
-        print("=" * 50)
 
 
 if __name__ == "__main__":
-    md_assembler = MdCppAssembler("../include/ThostFtdcMdApi.h", "ctp", "md")
+    md_assembler = GenerateCpp("../include/ThostFtdcMdApi.h", "ctp", "md")
     md_assembler.run()
 
-    td_assembler = MdCppAssembler("../include/ThostFtdcTraderApi.h", "ctp", "td")
+    td_assembler = GenerateCpp("../include/ThostFtdcTraderApi.h", "ctp", "td")
     td_assembler.run()

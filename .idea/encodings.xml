@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ctp/api/generator/ctpctp.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/generator/dllmain.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/generator/stdafx.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/generator/stdafx.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/include/ThostFtdcMdApi.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/include/ThostFtdcTraderApi.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/include/ThostFtdcUserApiDataType.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/include/ThostFtdcUserApiStruct.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctp.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctpmd/ctpmd.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctpmd/ctpmd.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctpmd/dllmain.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctpmd/stdafx.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctpmd/stdafx.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctptd/ctptd.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctptd/ctptd.h" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctptd/dllmain.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctptd/stdafx.cpp" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/ctp/api/src/ctptd/stdafx.h" charset="GB2312" />
+  </component>
+</project>
