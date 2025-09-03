@@ -28,13 +28,13 @@
 
    On Windows
 
-   **方式一、全局安装(推荐方式，二选一)**
+   **方式一：全局安装(推荐方式，二选一)**
 
    ```bash
    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
 
-   **方式二、单独在 Python 环境中安装(二选一)**
+   **方式二：单独在 Python 环境中安装(二选一)**
 
    ```bash
    pip install uv
