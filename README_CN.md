@@ -122,7 +122,34 @@ ctp/
 
 ## 5. Demo测试
 
-在项目根目录下 `demo.py`中填入 CTP 环境信息后运行
+在项目根目录下 `demo.py`中填入 CTP 环境信息后运行，结果如下：
+
+> Start connecting to CTP market server...
+> CtpMdApi：Trying to create an API with path D:\Project\PycharmProjects\homalos-ctp\con/md
+> CtpMdApi：createFtdcMdApi call succeeded.
+> CtpMdApi：Try initializing the API using the address:tcp://182.254.243.31:40011...
+> CtpMdApi：init call succeeded.
+> Connecting to tcp://182.254.243.31:40011...
+> Waiting for connection and login to complete...
+> ctp md api callback: onFrontConnected - The market data server is connected successfully
+> Start the login process
+> CtpMdApi：reqUserLogin call succeeded.
+> ctp md api callback: onRspUserLogin - The market server login is successful
+> Starting to subscribe to 2 contracts...
+> Subscription contract: SA601
+> Prepare subscription contract: SA601
+> Send subscription request SA601
+> Subscription request sent SA601
+> ctp md api callback: onRspSubMarketData - Subscription feedback, Contract=SA601, ErrorID=0
+> symbol: SA601
+> ctp md api callback: onRtnDepthMarketData
+> CTP Market data reception: SA601 @ 17:00:34 LastPrice=1276.0
+> Subscription contract: FG601
+> Prepare subscription contract: FG601
+> Send subscription request FG601
+> Subscription request sent FG601
+> ctp md api callback: onRtnDepthMarketData
+> CTP Market data reception: SA601 @ 17:00:35 LastPrice=1276.0
 
 ## 6. 脚本功能详细说明
 
