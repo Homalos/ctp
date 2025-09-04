@@ -1,6 +1,6 @@
 <p align="center">
   简体中文 |
-  <a href="README_CN.md">English</a>
+  <a href="https://github.com/Homalos/ctp/blob/main/README.md">English</a>
 </p>
 
 # 项目说明
@@ -49,7 +49,7 @@ ctp/
 ├── 📁 README.md							# 项目中文说明文件
 ├── 📁 README_CN.md							# 项目英文说明文件
 ├── 📁 build.py								# 扩展模块自动化编译脚本，组装了meson命令
-├── 📁 demo.py								# 扩展模块使用示例
+├── 📁 md_demo.py							# 行情扩展模块使用示例
 ├── 📁 hatch_build.py						# hatch钩子，用hatch打包时设置平台标识
 ├── 📁 meson.build							# meson构建配置文件
 ├── 📁 pyproject.toml						# Python项目管理配置文件，由uv自动生成
