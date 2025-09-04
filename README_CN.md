@@ -88,6 +88,12 @@ ctp/
 
 ## 4. 使用
 
+下载本项目Release源码或者使用命令安装：
+
+```bash
+pip install homalos-ctp
+```
+
 1. 安装 Python 虚拟环境及依赖(根目录下执行)
 
    ```bash

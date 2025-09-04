@@ -93,6 +93,12 @@ uv python install 3.13
 
 ## 4. Usage
 
+Download the Release source code of this project or install it using the command:
+
+```bash
+pip install homalos-ctp
+```
+
 1. Install a Python virtual environment and dependencies (execute from the root directory)
 
 ```bash
