@@ -1,6 +1,6 @@
 <p align="center">
   English |
-  <a href="README_CN.md">简体中文</a>
+  <a href="https://github.com/Homalos/ctp/blob/main/README_CN.md">简体中文</a>
 </p>
 
 # Project Description

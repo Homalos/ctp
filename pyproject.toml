@@ -38,6 +38,7 @@ Homepage = "https://github.com/Homalos/ctp"
 Repository = "https://github.com/Homalos/ctp"
 Documentation = "https://github.com/Homalos/README.md"
 Issues = "https://github.com/Homalos/ctp/issues"
+"Documentation (中文)" = "https://github.com/Homalos/ctp/blob/main/README_CN.md"
 
 [build-system]
 requires = ["hatchling"]
@@ -69,6 +70,10 @@ include = [
 artifacts = [
     "ctp/api/*.pyd",
     "ctp/api/*.so",
+    "LICENSE",
+    "README.md",
+    "README_CN.md",
+    "docs/**/*",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -90,9 +95,17 @@ exclude = [
     "/con",
     "**/__pycache__",
     "**/*.pyc",
+    ".gitignore",
+    "**/.gitignore",
+    ".python-version",
+    "uv.lock"
 ]
 # 显式指定要包含的文件模式
 artifacts = [
     "ctp/api/*.pyd",
     "ctp/api/*.so",
+    "LICENSE",
+    "README.md",
+    "README_CN.md",
+    "docs/**/*",
 ]
