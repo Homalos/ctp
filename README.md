@@ -242,13 +242,13 @@ Summary: This is a complete code generation toolchain that automatically generat
 ## 9. Community Support
 
 - **Technical Exchange (QQ Group)**: `446042777`
-- [pypi.org](https://pypi.org/project/homalos-ctp/6.7.11.1/)
+- [pypi.org](https://pypi.org/project/homalos-ctp)
 
 ## 10. Disclaimer
 
 **[Disclaimer content](docs/Disclaimer.md)**
 
-## 11. 补充
+## 11. Replenish
 
 **Meson**: Similar to Make and CMake, its main task is to configure the compilation environment, generate compilation instructions (for example, for Ninja), and manage the entire compilation process. It does not directly compile code, but rather drives tools like Ninja to do so.
 

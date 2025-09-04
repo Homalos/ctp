@@ -36,7 +36,7 @@ keywords = ["ctp", "quantitative", "trading", "investment"]
 [project.urls]
 Homepage = "https://github.com/Homalos/ctp"
 Repository = "https://github.com/Homalos/ctp"
-Documentation = "https://github.com/Homalos/README.md"
+Documentation = "https://github.com/Homalos/ctp/blob/main/README.md"
 Issues = "https://github.com/Homalos/ctp/issues"
 "Documentation (中文)" = "https://github.com/Homalos/ctp/blob/main/README_CN.md"
 
@@ -65,6 +65,19 @@ include = [
     "README.md",
     "README_CN.md",
     "docs"
+]
+# 排除不需要的文件
+exclude = [
+    "ctp/api/__pycache__",
+    "**/*.pyc",
+    "/build",
+    "/con",
+    "**/__pycache__",
+    "**/*.pyc",
+    ".gitignore",
+    "**/.gitignore",
+    ".python-version",
+    "uv.lock"
 ]
 # 显式指定要包含的文件模式
 artifacts = [
