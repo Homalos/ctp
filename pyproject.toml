@@ -59,6 +59,7 @@ class-name = "CustomBuildHook"
 include = [
     "ctp",
     "build.py",
+    "hatch_build.py",
     "demo.py",
     "LICENSE",
     "meson.build",
@@ -93,6 +94,7 @@ artifacts = [
 packages = [
     "ctp",
     "build.py",
+    "hatch_build.py",
     "demo.py",
     "LICENSE",
     "meson.build",
