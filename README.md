@@ -283,3 +283,8 @@ Summary: This is a complete code generation toolchain that automatically generat
 **Meson**: Similar to Make and CMake, its main task is to configure the compilation environment, generate compilation instructions (for example, for Ninja), and manage the entire compilation process. It does not directly compile code, but rather drives tools like Ninja to do so.
 
 **Pybind11**: A lightweight C++ library for exposing (binding) C++ code to the Python interpreter. It allows Python code to seamlessly call C++ functions and classes, just like calling regular Python modules. Its core goal is to provide an extremely simple, nearly boilerplate-free interface that easily combines the high-performance computing capabilities of C++ with the ease of use and vast Python ecosystem.
+
+---
+
+*homalos-ctp*
+*Last Updated: 2025-09-04*
