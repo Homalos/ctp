@@ -16,6 +16,8 @@ from pathlib import Path
 from typing import Any
 
 from ctp.api import MdApi
+from ctp.api.custom_constant import CtpConst
+from util import prepare_address
 
 
 class CtpMdApi(MdApi):
@@ -32,8 +34,8 @@ class CtpMdApi(MdApi):
         self.userid: str = ""               # 用户名 username
         self.password: str = ""             # 密码 password
         self.user_product_info = ""         # 用户端产品信息 User product information
+        self.connect_status: bool = False  # 连接状态 Connection status
         self.login_status: bool = False     # 登录状态 Login status
-        self.connect_status: bool = False   # 连接状态 Connection status
         self.current_date = datetime.now().strftime("%Y%m%d")   # 当前日期 Current date
 
     def onFrontConnected(self) -> None:
@@ -51,10 +53,7 @@ class CtpMdApi(MdApi):
         print("ctp md api callback: onFrontConnected - The market data server is connected successfully")
         print("Start the login process")
 
-        # 调用登录
-
-        # Call login
-        self.login()
+        self.login()  # 调用登录方法, Calling the login method
 
     def onFrontDisconnected(self, reason: int) -> None:
         """
@@ -65,12 +64,13 @@ class CtpMdApi(MdApi):
         自动重连地址，可能是原来注册的地址，也可能是系统支持的其它可用的通信地址，它由程序自动选择。
         注:重连之后需要重新登录。6.7.9及以后版本中，断线自动重连的时间间隔为固定1秒。
         :param reason: 错误代号，连接断开原因，为10进制值，因此需要转成16进制后再参照下列代码：
-                0x1001 网络读失败
-                0x1002 网络写失败
-                0x2001 接收心跳超时
-                0x2002 发送心跳失败
+                0x1001（4097） 网络读失败。
+                0x1002（4098） 网络写失败。
+                0x2001（8193） 接收心跳超时。接收心跳超时。前置每53s会给一个心跳报文给api，如果api超过120s未收到任何新数据，
+                则认为网络异常，断开连接
+                0x2002（8194） 发送心跳失败。api每15s会发送一个心跳报文给前置，如果api检测到超过40s没发送过任何新数据，则认为网络异常，
+                断开连接
                 0x2003 收到错误报文
-        :param reason: 失败原因 10进制值int值
         :return: None
 
         Response to disconnection from the market server
@@ -83,24 +83,22 @@ class CtpMdApi(MdApi):
         the automatic reconnection interval is fixed at 1 second.
         reason: Error code, indicating the reason for the disconnection. This value is in decimal,
         so it must be converted to hexadecimal before referring to the following codes:
-                0x1001 Network read failure
-                0x1002 Network write failure
-                0x2001 Heartbeat reception timeout
-                0x2002 Heartbeat transmission failure
+                0x1001(4097) Network read failure.
+                0x1002(4098) Network write failure.
+                0x2001(8193) Heartbeat reception timeout. Heartbeat reception timeout. The frontend sends a heartbeat
+                message to the API every 53 seconds. If the API does not receive any new data for more than 120 seconds,
+                it considers the network abnormality and disconnects.
+                0x2002(8194) Heartbeat transmission failure. Failed to send heartbeat. The API sends a heartbeat
+                message to the front-end every 15 seconds. If the API detects that no new data has been sent for more
+                than 40 seconds, it will consider the network abnormal and disconnect.
                 0x2003 Error message received
         reason: Reason for failure (int value)
         return: None
         """
-        # Analyze the disconnection reason
+        self.connect_status = False
+        self.login_status = False
         reason_hex = hex(reason)
-        reason_mapping = {
-            0x1001: "网络读失败",
-            0x1002: "网络写失败",
-            0x2001: "接收心跳超时",
-            0x2002: "发送心跳失败",
-            0x2003: "收到错误报文"
-        }
-        reason_msg = reason_mapping.get(reason, f"Unknown cause({reason_hex})")
+        reason_msg = CtpConst.REASON_MAPPING.get(reason, f"Unknown cause({reason_hex})")
         print(f"The market server connection is disconnected, the reason is：{reason_msg} ({reason_hex})")
 
     def onRspUserLogin(self, data: dict, error: dict, reqid: int, last: bool) -> None:
@@ -218,10 +216,10 @@ class CtpMdApi(MdApi):
 
         :param address: 行情服务器地址
         服务器地址的格式为：“protocol://ipaddress:port”
-        如：”tcp://127.0.0.1:17001”。“tcp”代表传输协议，“127.0.0.1”代表服务器地址。”17001”代表行情端口号。
+        如：“tcp://127.0.0.1:17001”。“tcp”代表传输协议，“127.0.0.1”代表服务器地址。“17001”代表行情端口号。
         SSL前置格式：ssl://192.168.0.1:41205
         TCP前置IPv4格式：tcp://192.168.0.1:41205
-        TCP前置IPv6格式：tcp6://fe80::20f8:aa9b:7d59:887d:35001
+        TCP前置IPv6格式：tcp6://fe80::20f8:aabb:7d59:887d:35001
         :param broker_id: 经纪公司代码
         :param userid: 用户代码
         :param password: 密码
@@ -236,7 +234,7 @@ class CtpMdApi(MdApi):
         SSL prefix format: ssl://192.168.0.1:41205
         TCP prefix format: tcp://192.168.0.1:41205
         TCP prefix format: tcp://192.168.0.1:41205
-        TCP prefix format: tcp6://fe80::20f8:aa9b:7d59:887d:35001
+        TCP prefix format: tcp6://fe80::20f8:aabb:7d59:887d:35001
         broker_id: Brokerage Company Code
         userid: User Code
         password: password
@@ -437,19 +435,6 @@ class MarketData(object):
         # Market interface example
         self.md_api: CtpMdApi | None = None
 
-    @staticmethod
-    def _prepare_address(address: str) -> str:
-        """
-        如果没有协议，则帮助程序会在前面添加 tcp:// 作为前缀。
-
-        If there is no protocol, the helper prefixes it with tcp:// .
-        :param address: 行情服务器地址 Market server address
-        :return: 返回带协议的服务器地址 Returns the server address with protocol
-        """
-        if not any(address.startswith(scheme) for scheme in ["tcp://", "ssl://", "socks://"]):
-            return "tcp://" + address
-        return address
-
     def connect(self, setting: dict[str, Any]) -> None:
         """
         连接行情服务器
@@ -478,7 +463,7 @@ class MarketData(object):
             if not self.md_api:
                 self.md_api = CtpMdApi()
 
-            md_address: str = self._prepare_address(md_address_raw)
+            md_address: str = prepare_address(md_address_raw)
             self.md_api.connect(md_address, broker_id, user_id, password)
 
             print(f"Connecting to {md_address}...")
