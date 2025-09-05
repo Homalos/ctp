@@ -76,7 +76,6 @@ exclude = [
     "**/__pycache__",
     "**/*.pyc",
     ".gitignore",
-    "**/.gitignore",
     ".python-version",
     "uv.lock"
 ]
@@ -111,7 +110,6 @@ exclude = [
     "**/__pycache__",
     "**/*.pyc",
     ".gitignore",
-    "**/.gitignore",
     ".python-version",
     "uv.lock"
 ]
