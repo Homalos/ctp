@@ -334,5 +334,5 @@ generator脚本位于`ctp/api/generator/`
 ---
 
 *homalos-ctp*
-*最后更新：2025-09-04*
+*最后更新：2025-09-05*
 
