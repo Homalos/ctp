@@ -121,8 +121,8 @@ def build_ctp() -> None:
     print("=" * 80)
     print("构建CTP模块")
     print("=" * 80)
-    copy_module_files('homalos-ctp', ['ctpmd', 'ctptd'])
-    generate_stub_files('homalos-ctp', ['ctpmd', 'ctptd'])
+    copy_module_files('ctp', ['ctpmd', 'ctptd'])
+    generate_stub_files('ctp', ['ctpmd', 'ctptd'])
 
 
 def main() -> None:
