@@ -12,3 +12,6 @@ wheels/
 con
 
 .idea
+.git
+.mypy_cache
+.vscode
