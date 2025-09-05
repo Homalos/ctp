@@ -24,7 +24,6 @@
 
 ```reStructuredText
 ctp/
-├── 📂 assets/								# 资源文件
 ├── 📂 ctp/ 								# CTP接口模块
 │   ├── 📂 api/ 							# CTP API模块
 │   │   ├── 📂 generator/ 					# C++与Python绑定生成脚本
@@ -32,10 +31,12 @@ ctp/
 │   │   ├── 📂 libs/ 						# CTP API静态库文件
 │   │   ├── 📂 src/ 						# CTP与Python绑定代码文件
 │   │   ├── 📁 __init__.py 					# MdApi和TdApi初始化导入
+│   │   ├── 📁 ctp_constant.py 				# CTP API常量
 │   │   ├── 📁 ctpmd.cp313-win_amd64.pyd	# C++编译为Python的行情扩展模块
 │   │   ├── 📁 ctpmd.pyi 					# 行情扩展模块对应的存根文件
 │   │   ├── 📁 ctptd.cp313-win_amd64.pyd	# C++编译为Python的交易扩展模块
 │   │   ├── 📁 ctptd.pyi 					# 交易扩展模块对应的存根文件
+│   │   ├── 📁 custom_constant.py 			# 用户自定义常量类
 │   │   ├── 📁 thostmduserapi_se.dll		# Windows CTP行情API动态链接库
 │   │   ├── 📁 thostmduserapi_se.so			# Linuxs CTP行情API动态链接库
 │   │   ├── 📁 thosttraderapi_se.dll		# Windows CTP交易API动态链接库
@@ -49,10 +50,12 @@ ctp/
 ├── 📁 README.md							# 项目中文说明文件
 ├── 📁 README_CN.md							# 项目英文说明文件
 ├── 📁 build.py								# 扩展模块自动化编译脚本，组装了meson命令
-├── 📁 md_demo.py							# 行情扩展模块使用示例
 ├── 📁 hatch_build.py						# hatch钩子，用hatch打包时设置平台标识
+├── 📁 md_demo.py							# 行情扩展模块使用示例
 ├── 📁 meson.build							# meson构建配置文件
 ├── 📁 pyproject.toml						# Python项目管理配置文件，由uv自动生成
+├── 📁 td_demo.py							# 交易扩展模块使用示例
+├── 📁 util.py								# 公共工具
 └── 📁 uv.lock								# uv锁定文件，由uv自动生成
 ```
 
@@ -128,37 +131,91 @@ pip install homalos-ctp
 
 ## 5. Demo测试
 
-在项目根目录下 `demo.py`中填入 CTP 环境信息后运行，结果如下：
+1. **测试行情扩展模块**
 
-```reStructuredText
-Start connecting to CTP market server...
-CtpMdApi：Trying to create an API with path D:\Project\PycharmProjects\homalos-ctp\con/md
-CtpMdApi：createFtdcMdApi call succeeded.
-CtpMdApi：Try initializing the API using the address:tcp://182.254.243.31:40011...
-CtpMdApi：init call succeeded.
-Connecting to tcp://182.254.243.31:40011...
-Waiting for connection and login to complete...
-ctp md api callback: onFrontConnected - The market data server is connected successfully
-Start the login process
-CtpMdApi：reqUserLogin call succeeded.
-ctp md api callback: onRspUserLogin - The market server login is successful
-Starting to subscribe to 2 contracts...
-Subscription contract: SA601
-Prepare subscription contract: SA601
-Send subscription request SA601
-Subscription request sent SA601
-ctp md api callback: onRspSubMarketData - Subscription feedback, Contract=SA601, ErrorID=0
-symbol: SA601
-ctp md api callback: onRtnDepthMarketData
-CTP Market data reception: SA601 @ 17:00:34 LastPrice=1276.0
-Subscription contract: FG601
-Prepare subscription contract: FG601
-Send subscription request FG601
-Subscription request sent FG601
-ctp md api callback: onRtnDepthMarketData
-CTP Market data reception: SA601 @ 17:00:35 LastPrice=1276.0
-...
-```
+   在项目根目录下 `md_demo.py`中填入 CTP 环境信息后运行，结果如下：
+
+   ```reStructuredText
+   Start connecting to CTP market server...
+   CtpMdApi：Trying to create an API with path D:\Project\PycharmProjects\homalos-ctp\con/md
+   CtpMdApi：createFtdcMdApi call succeeded.
+   CtpMdApi：Try initializing the API using the address:tcp://182.254.243.31:40011...
+   CtpMdApi：init call succeeded.
+   Connecting to tcp://182.254.243.31:40011...
+   Waiting for connection and login to complete...
+   ctp md api callback: onFrontConnected - The market data server is connected successfully
+   Start the login process
+   CtpMdApi：reqUserLogin call succeeded.
+   ctp md api callback: onRspUserLogin - The market server login is successful
+   Starting to subscribe to 2 contracts...
+   Subscription contract: SA601
+   Prepare subscription contract: SA601
+   Send subscription request SA601
+   Subscription request sent SA601
+   ctp md api callback: onRspSubMarketData - Subscription feedback, Contract=SA601, ErrorID=0
+   symbol: SA601
+   ctp md api callback: onRtnDepthMarketData
+   CTP Market data reception: SA601 @ 17:00:34 LastPrice=1276.0
+   Subscription contract: FG601
+   Prepare subscription contract: FG601
+   Send subscription request FG601
+   Subscription request sent FG601
+   ctp md api callback: onRtnDepthMarketData
+   CTP Market data reception: SA601 @ 17:00:35 LastPrice=1276.0
+   ...
+   ```
+
+2. **测试交易扩展模块**
+
+   在项目根目录下 `td_demo.py`中填入 CTP 环境信息后运行，结果如下：
+
+   ```reStructuredText
+   CtpTdApi: Attempting to create an API with path D:\Project\PycharmProjects\homalos-ctp\con/td
+   CtpTdApi: createFtdcTraderApi call succeeded.
+   CtpTdApi：尝试使用地址初始化 API：tcp://182.254.243.31:30001...
+   CtpTdApi：init 调用成功。
+   Waiting for connection and login to complete...
+   ctp td api callback: onFrontConnected - Trading server connection successful
+   开始认证，auth_status: False
+   发送认证请求，req_id: 1
+   Transaction server authorization verification successful
+   开始登录，login_status: False
+   发送登录请求，req_id: 2
+   ctp td api callback: onRspUserLogin - Login Response, ErrorID=0
+   Trading server login successful
+   Settlement information confirmed successfully
+   
+   🚀 开始下单测试...
+   正在委托下单...
+   symbol: SA601
+   direction: BUY_OPEN
+   price: 1286
+   volume: 1
+   委托请求发送成功
+   委托下单成功，委托号：1_-394894342_1
+   下单完成，订单号: 1_-394894342_1
+   
+   ⏰ 等待5秒观察订单状态...
+   ctp td api callback: onRtnOrder
+   订单状态更新 - 订单 ID：1_-394894342_1，状态：未知 (a)
+   状态变化: 新订单 -> 未知
+   ctp td api callback: onRtnOrder
+   订单状态更新 - 订单 ID：1_-394894342_1，状态：未知 (a)
+   状态变化: a -> 未知
+   ctp td api callback: onRtnOrder
+   订单状态更新 - 订单 ID：1_-394894342_1，状态：全部成交 (0)
+   订单全部成交 - 订单号: 1_-394894342_1, 合约: SA601
+   状态变化: a -> 全部成交
+   ctp td api callback: onRtnTrade
+   onRtnTrade trade_id: 2025090800029227, order_id:        48977, price: 1286.0, volume: 1, trade_date: 20250905, trade_time: 21:41:12
+   
+   ==================================================
+   📋 订单状态汇总
+   ==================================================
+   订单号: 1_-394894342_1 | 状态: 全部成交
+   ==================================================
+   ...
+   ```
 
 ## 6. 脚本功能详细说明
 
