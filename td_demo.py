@@ -737,7 +737,7 @@ if __name__ == '__main__':
     ctp_config = {
         "td_address": "tcp://182.254.243.31:30001",  # 交易服务器地址 Trade server address
         # "td_address": "tcp://182.254.243.31:40001",  # 7x24易服务器地址 Trade server address
-        "broker_id": "9999",  # 经纪商代码 Broker Code
+        "broker_id": "",  # 经纪商代码 Broker Code
         "user_id": "",  # 用户代码 User Code
         "password": "",  # password
         "appid": "simnow_client_test",
