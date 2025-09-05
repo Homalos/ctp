@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-自动生成C++ DLL入口点代码文件
+@ProjectName: homalos-ctp
+@FileName   : generate_api_functions.py
+@Date       : 2025/8/27 14:53
+@Author     : Donny
+@Email      : donnymoving@gmail.com
+@Software   : PyCharm
+@Description: 自动生成C++ DLL入口点代码文件
+
 生成dllmain.cpp、stdafx.cpp、stdafx.h三个文件
 生成所有文件到当前目录
 python generate_dll_entry.py all
@@ -29,7 +36,7 @@ class DllEntryGenerator:
         """
         初始化生成器
         """
-        self.prefix = prefix  # homalos-ctp/tts
+        self.prefix = prefix  # ctp/tts
         self.name = name  # md/td
         self.output_path = "."  # 输出目录
         # 输出目录名称，例如：ctpmd、ctptd
@@ -145,8 +152,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 
 if __name__ == "__main__":
-    generator = DllEntryGenerator("homalos-ctp", "md")
+    generator = DllEntryGenerator("ctp", "md")
     generator.run()
 
-    generator = DllEntryGenerator("homalos-ctp", "td")
+    generator = DllEntryGenerator("ctp", "td")
     generator.run()

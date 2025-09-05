@@ -85,3 +85,5 @@ if __name__ == '__main__':
     delete_ctp_files()
     # 执行所有生成步骤
     run()
+    # 组装完 cpp、h文件后清理不再使用的ctp开头文件
+    delete_ctp_files()

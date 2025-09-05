@@ -21,7 +21,7 @@ def create_output_dir(output_dir_name: str) -> str:
     # 获取当前文件的Path对象
     current_file = Path(__file__).resolve()
 
-    # 获取当前文件所在的目录父目录 /homalos-ctp/api
+    # 获取当前文件所在的目录父目录 /ctp/api
     parent_path: Path = current_file.parent.parent
 
     output_path: Path = Path(parent_path / last_parent_dir_name / output_dir_name)
@@ -94,7 +94,7 @@ def camel_to_underscore_upper(name: str) -> str:
 def underscore_to_camelcase(name: str) -> str:
     """
     将下划线命名转换为驼峰命名（首字母大写）
-    例如: "ctp_md_function_constant" -> "CtpMdFunctionConstant"
+    例如: "ctp_function_constant" -> "CtpFunctionConstant"
     """
     if not name:
         return ""
